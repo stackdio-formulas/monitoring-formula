@@ -1,0 +1,34 @@
+title: Sensu Formula for stackd.io
+description: Salt formula for provisioning Sensu
+root_path: sensu
+components:
+  - title: Sensu Server
+    description: The Sensu server
+    sls_path: sensu.server
+  - title: Sensu Uchiwa
+    description: The Uchiwa dashboard
+    sls_path: sensu.uchiwa
+  - title: Sensu Client
+    description: Sensu clients
+    sls_path: sensu.client
+  - title: Sensu Plugins
+    description: Sensu plugins
+    sls_path: sensu.plugins
+pillar_defaults:
+  sensu:
+    web:
+      server_name: CHANGEME
+      domain: CHANGEME
+      gen_ssl: false
+      proxy_pass: http://localhost:8999
+    auth:
+      stormpath_url: CHANGEME
+      stormpath_id: CHANGEME
+      stormpath_secret: CHANGEME
+    s3:
+      bucket: dr-nexus-artifacts
+    synthesys:
+      nn: CHANGEME
+      dn: CHANGME
+
+
