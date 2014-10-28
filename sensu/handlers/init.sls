@@ -1,5 +1,5 @@
 
-/etc/sensu/plugins:
+/etc/sensu/handlers:
   file:
     - recurse
     - makedirs: true
@@ -7,6 +7,6 @@
     - file_mode: 755
     - dir_mode: 755
     - recurse: true
-    - source: salt://sensu/etc/sensu/plugins
+    - source: salt://sensu/etc/sensu/handlers
 
 

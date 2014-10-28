@@ -14,8 +14,12 @@ components:
   - title: Sensu Plugins
     description: Sensu plugins
     sls_path: sensu.plugins
+  - title: Sensu Handlers
+    description: Sensue handlers
+    sls_path: sensu.handlers
 pillar_defaults:
   sensu:
+    graphite_host: localhost
     web:
       server_name: CHANGEME
       domain: CHANGEME
