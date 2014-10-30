@@ -1,0 +1,8 @@
+{% set hostname = salt['mine.get']('G@stack_id:' ~ grains.stack_id ~ ' and G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] %}
+{
+  "client": {
+    "name": "{{ hostname }}",
+    "address": "{{ hostname }}",
+    "subscriptions": {{ pillar.monitor.sensu.client.subscriptions }}
+  }
+}

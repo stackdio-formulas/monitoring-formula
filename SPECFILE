@@ -1,38 +1,63 @@
-title: Sensu Formula for stackd.io
-description: Salt formula for provisioning Sensu
-root_path: sensu
+title: Monitoring Formula for stackd.io
+description: Salt formula for provisioning system monitoring tools
+root_path: monitor
 components:
+
   - title: Sensu Server
     description: The Sensu server
-    sls_path: sensu.server
+    sls_path: monitor.sensu.server
+
   - title: Sensu Uchiwa
     description: The Uchiwa dashboard
-    sls_path: sensu.uchiwa
+    sls_path: monitor.sensu.uchiwa
+
   - title: Sensu Client
     description: Sensu clients
-    sls_path: sensu.client
+    sls_path: monitor.sensu.client
+
   - title: Sensu Plugins
     description: Sensu plugins
-    sls_path: sensu.plugins
+    sls_path: monitor.sensu.plugins
+
+  - title: Sensu Mutators
+    description: Sensu mutators
+    sls_path: monitor.sensu.mutators
+
   - title: Sensu Handlers
-    description: Sensue handlers
-    sls_path: sensu.handlers
+    description: Sensu handlers
+    sls_path: monitor.sensu.handlers
+
+  - title: Sensu Extensions
+    description: Sensu extensions
+    sls_path: monitor.sensu.extensions
+
+  - title: Graphite
+    description: Graphite and components
+    sls_path: monitor.graphite
+
+  - title: Grafana
+    description: Grafana UI
+    sls_path: monitor.grafana
+
 pillar_defaults:
-  sensu:
-    graphite_host: localhost
-    web:
-      server_name: CHANGEME
-      domain: CHANGEME
-      gen_ssl: false
-      proxy_pass: http://localhost:8999
-    auth:
-      stormpath_url: CHANGEME
-      stormpath_id: CHANGEME
-      stormpath_secret: CHANGEME
-    s3:
-      bucket: dr-nexus-artifacts
-    synthesys:
-      nn: CHANGEME
-      dn: CHANGME
+  monitor:
+    sensu:
+      ssl:
+        - cacert: CHANGEME
+        - cert: CHANGEME
+        - key: CHANGEME
+      client:
+        server_host: localhost
+        subscriptions:
+          - all
+      api:
+        - username: admin 
+        - password: CHANGEME
+      rabbitmq:
+        - username: sensu
+        - password: CHANGEME
+        - vhost: /sensu
+      check_system: true
+          
 
 

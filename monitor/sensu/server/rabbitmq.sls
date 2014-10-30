@@ -28,19 +28,20 @@ rabbitmq-server:
 
 {% endif %}
 
-/etc/rabbitmq/ssl:
+/etc/rabbitmq/ssl/cacert.pem:
   file:
-    - directory
-    - makedirs: true
+    - managed
+    - contents_pillar: monitor.sensu.ssl.cacert
 
-{% for cert in ["sensu_ca/cacert.pem", "server/cert.pem", "server/key.pem" ] %}
-copy_{{cert}}:
+/etc/rabbitmq/ssl/cert.pem:
   file:
-    - copy
-    - makedirs: true
-    - name: /etc/rabbitmq/ssl
-    - source: /mnt/sensu/ssl_certs/{{cert}}
-{% end for %}
+    - managed
+    - contents_pillar: monitor.sensu.ssl.cert
+
+/etc/rabbitmq/ssl/key.pem:
+  file:
+    - managed
+    - contents_pillar: monitor.sensu.ssl.key
 
 /etc/rabbitmq/rabbitmq.config:
   file:

@@ -1,0 +1,13 @@
+{
+  "rabbitmq": {
+    "ssl": {
+      "cert_chain_file": "/etc/sensu/ssl/cert.pem",
+      "private_key_file": "/etc/sensu/ssl/key.pem"
+    },
+    "host": "{{ pillar.monitor.sensu.client.server_host }}",
+    "port": 5671,
+    "vhost": "{{ pillar.monitor.sensu.rabbitmq.vhost }}",
+    "user": "{{ pillar.monitor.sensu.rabbitmq.username }}",
+    "password": "{{pillar.monitor.sensu.rabbitmq.password}}"
+  }
+}
