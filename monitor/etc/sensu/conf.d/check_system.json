@@ -1,4 +1,3 @@
-{# This is a basic set of system checks that should work and be relevant on any system. #}
 {
   "checks": {
     "load_check": {
@@ -29,4 +28,3 @@
     }
   }
 }
-

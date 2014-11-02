@@ -10,18 +10,18 @@ utilities:
 Also includes various prereqs for each component.  Usage should be something
 like:
 
-- Your main monitoring host:
+- Your main monitoring host (in this order):
     - `monitor.sensu.server`: the main Sensu server
-    - `monitor.sensu.uchiwa`: web UI for Sensu
     - `monitor.sensu.client`: Sensu client
-    - `monitor.sensu.plugins`: plugins to monitor specific services
-    - `monitor.sensu.mutators`: mutators for transforming Sensu results
-    - `monitor.sensu.handlers`: handlers for processing/routing Sensu results
-    - `monitor.sensu.extensions`: (OPTIONAL) extensions for extending Sensu
-      capabilities
-      enabled
+    - `monitor.sensu.uchiwa`: web UI for Sensu
     - `monitor.graphite`: Graphite database
     - `monitor.grafana`: Grafana UI for Graphite
+    - The `monitor.sensu.server` state also includes these states:
+        - `monitor.sensu.plugins`: plugins to monitor specific services
+        - `monitor.sensu.mutators`: mutators for transforming Sensu results
+        - `monitor.sensu.handlers`: handlers for processing/routing Sensu results
+        - `monitor.sensu.extensions`: extensions for extending Sensu capabilities
+
 - All clients:
     - `monitor.sensu.client`: Sensu client
     - `monitor.sensu.plugins`: plugins to monitor specific services

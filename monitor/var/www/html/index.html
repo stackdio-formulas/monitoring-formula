@@ -1,0 +1,101 @@
+{%- set hostname = salt['mine.get']('G@stack_id:' ~ grains.stack_id ~ ' and G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] -%}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Infrastructure Monitoring</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+
+    <style>
+    html,
+    body {
+      height: 100%;
+      /* The html and body elements cannot have any padding or margin. */
+      background-color: #333;
+    }
+    body {
+      color: #fff;
+    }
+
+    a,
+    a:focus,
+    a:hover {
+      color: #999;
+    }
+
+    /* Wrapper for page content to push down footer */
+    #wrap {
+      min-height: 100%;
+      height: auto;
+      /* Negative indent footer by its height */
+      margin: 0 auto -60px;
+      /* Pad bottom by footer height */
+      padding: 0 0 60px; 
+      -webkit-box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+              box-shadow: inset 0 0 100px rgba(0,0,0,.5);
+    }
+
+    /* Set the fixed height of the footer here */ 
+    #footer {
+      height: 60px;
+      background-color: #555;
+      color: #ddd;
+    }
+
+    .container {
+      width: auto;
+      max-width: 680px;
+      padding: 0 15px; 
+    }
+    .container .credit {
+      margin: 20px 0; 
+    }
+    </style>
+
+
+  </head>
+
+  <body>
+
+    <div id="wrap">
+        <!-- Begin page content -->
+        <div class="container">
+          <div class="page-header">
+            <h1>Infrastructure Monitoring</h1>
+          </div>
+          <p class="lead">Big Brother is watching your infrastructure. Here's what he sees:</p>
+            <ul>
+                    <li><a href="http://{{ hostname }}:3000">Uchiwa</a>:
+                    Dashboard for Sensu, the open-source monitoring framework</li>
+                    <li><a href="http://{{ hostname }}:4567">Sensu API</a>: The
+                    Sensu API, useful if you'd like to pull Sensu data into
+                    something else</li>
+                    <li><a href="http://{{ hostname }}:8080">Graphite</a>: Real
+                    time graphing; Sensu can ship metrics to Graphite</li>
+                    <li><a href="http://{{ hostname }}:8080/dashboard">Graphite
+                    Dashboard</a>: You can build dashboards for specific
+                    use cases (e.g. key stats for production web servers)</li>
+                    <li><a href="http://{{ hostname }}/grafana">Grafana</a>: A
+                    richer/more modern dashboard for Graphite data</li>
+            </ul>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="container">
+            <p class="credit"><small>
+                This stack provisioned with 
+                <a href="http://stackd.io">stackd.io</a> from 
+                <a href="http://www.digitalreasoning.com">Digital Reasoning</a> // 
+                <a href="http://www.digitalreasoning.com">www.digitalreasoning.com</a>
+            </small></p>
+        </div>
+    </div>
+
+
+  </body>
+</html>

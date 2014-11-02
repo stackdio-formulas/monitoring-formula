@@ -4,7 +4,7 @@ elasticsearch-repo:
     - managed
     - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
     - name: deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main
-    - refresh_db
+    - refresh_db: true
 
 elasticsearch-pkgs:
   pkg:
@@ -33,8 +33,8 @@ grafana-tgz:
     - symlink
     - target: /usr/share/grafana-1.5.3
 
-/etc/apache2/sites-enabled/grafana.conf:
+/usr/share/grafana/config.js:
   file:
     - managed
-    - contents: "alias /grafana /usr/share/grafana"
-
+    - source: salt://monitor/usr/share/grafana/config.js
+    - template: jinja

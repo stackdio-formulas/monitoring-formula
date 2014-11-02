@@ -17,3 +17,10 @@
     - source: salt://monitor/etc/sensu/handlers
     - template: jinja
 
+/etc/sensu/conf.d/handlers.json:
+  file:
+    - managed
+    - makedirs: true
+    - source: salt://monitor/etc/sensu/conf.d/handlers.json
+    - template: jinja
+

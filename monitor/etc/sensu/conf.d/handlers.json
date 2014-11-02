@@ -1,0 +1,12 @@
+{
+  "handlers": {
+    "graphite-tcp": {
+      "type": "tcp",
+      "mutator": "graphite",
+      "socket": {
+          "host": "localhost",
+          "port": 2003
+      }
+    }
+}
+

@@ -17,3 +17,10 @@
     - source: salt://monitor/etc/sensu/mutators
     - template: jinja
 
+/etc/sensu/conf.d/mutators.json:
+  file:
+    - managed
+    - makedirs: true
+    - source: salt://monitor/etc/sensu/conf.d/mutators.json
+    - template: jinja
+

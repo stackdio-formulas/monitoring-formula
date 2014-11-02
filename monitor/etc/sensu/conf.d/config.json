@@ -1,13 +1,15 @@
-{% set hostname = salt['mine.get']('G@stack_id:' ~ grains.stack_id ~ ' and G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] %}
+{%- set hostname = salt['mine.get']('G@stack_id:' ~ grains.stack_id ~ ' and G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] -%}
+{%- set api_username = salt['pillar.get']('monitor:sensu:api:username') -%}
+{%- set api_password = salt['pillar.get']('monitor:sensu:api:password') -%}
 {
   "api": {
-    "host": "{{hostname}}",
+    "host": "{{ hostname }}",
     "port": 4567,
-    "user": "{{ pillar.monitor.sensu.api.username}}",
-    "password": "{{ pillar.monitor.sensu.api.password }}"
+    "user": "{{ api_username }}",
+    "password": "{{ api_password }}"
   },
   "redis": {
-    "host": "{{hostname}}",
+    "host": "localhost",
     "port": 6379
   }
 }

@@ -1,0 +1,16 @@
+{%- set username = salt['pillar.get']('monitor:graphite:username') -%}
+{%- set email_addr = salt['pillar.get']('monitor:graphite:email_addr') -%}
+[
+    {   
+        "fields": {
+            "email": "{{ email_addr }}",
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true,
+            "password": "%PASSWORD_HASH%",
+            "username": "{{ username }}"
+        },  
+        "model": "auth.user",
+        "pk": 1
+    }   
+]
