@@ -43,6 +43,8 @@ links to various UIs.
 
 - **REQUIRED**: As mentioned above, you need to provide the SSL certs in order for things to
   talk to each other (`monitor.senus.ssl.*`)
+- **OPTIONAL** *(but highly recommended)*: There are a number of properties that
+  default to the value `CHANGEME` (e.g. passwords), you should change them.
 - **OPTIONAL** *(but highly recommended)*: You need to specify 
   `monitor.sensu.client.subscriptions` for each host to specify what 
   checks/metrics they should subscribe to.  By default the `SPECFILE` will 
@@ -51,6 +53,9 @@ links to various UIs.
 - **OPTIONAL**: `monitor.sensu.check_system` includes a basic set of system
   checks, and defaults to `true`. If you'd like to exclude it for any reason 
   you can set this to `false`.
+- **OPTIONAL**: `monitor.graphite.storage_dir` is set to the default value for
+  graphite on the root partition, but you may want to move it to a volume with
+  more storage.
 
 ## checks and metrics
 

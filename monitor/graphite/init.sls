@@ -1,5 +1,6 @@
 {%- set db_password = salt['pillar.get']('monitor:graphite:db_password', 'default') -%}
 {%- set graphite_password = salt['pillar.get']('monitor:graphite:password') -%}
+{%- set storage_dir = salt['pillar.get']('monitor:graphite:storage_dir') -%}
 
 # lump all of the dependencies into a single package state
 all-packages:
@@ -23,6 +24,13 @@ create_db_user:
     - present
     - name: graphite
     - password: {{ db_password }}
+
+{{ storage_dir }}:
+  file:
+    - directory
+    - makedirs: true
+    - user: _graphite
+    - group: _graphite
 
 create_db:
   postgres_database:
