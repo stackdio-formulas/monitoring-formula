@@ -75,9 +75,21 @@ graphite_create_superuser:
     - source: salt://monitor/etc/carbon/
     - template: jinja
 
+/etc/apache2/sites-enabled/graphite.conf:
+  file:
+    - symlink
+    - target: /etc/apache2/sites-available/graphite.conf
+    - unless: /etc/apache2/sites-enabled/graphite.conf
+
 carbon-cache:
   service:
     - running
     - enable: true
 
+apache2-graphite-svc:
+  service:
+    - running
+    - name: apache2
+    - watch: 
+      - file: /etc/apache2/sites-enabled/graphite.conf
 

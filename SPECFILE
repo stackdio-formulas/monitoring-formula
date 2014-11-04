@@ -43,24 +43,24 @@ pillar_defaults:
   monitor:
     sensu:
       ssl:
-        - server_cacert: CHANGEME
-        - server_cert: CHANGEME
-        - server_key: CHANGEME
-        - client_cert: CHANGEME
-        - client_key: CHANGEME
+        server_cacert: CHANGEME
+        server_cert: CHANGEME
+        server_key: CHANGEME
+        client_cert: CHANGEME
+        client_key: CHANGEME
       client:
         subscriptions:
           - all
       api:
-        - username: admin 
-        - password: CHANGEME
+        username: admin 
+        password: CHANGEME
       uchiwa:
-        - username: admin 
-        - password: CHANGEME
+        username: admin 
+        password: CHANGEME
       rabbitmq:
-        - username: sensu
-        - password: CHANGEME
-        - vhost: /sensu
+        username: sensu
+        password: CHANGEME
+        vhost: /sensu
       check_system: true
     graphite:
       secret_key: CHANGEME

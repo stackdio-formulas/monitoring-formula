@@ -4,6 +4,7 @@
 #
 
 include:
+  - monitor.sensu.repo
   - monitor.sensu.server.rabbitmq
   - monitor.sensu.server.redis
   - monitor.sensu.server.landing_page

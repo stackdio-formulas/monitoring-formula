@@ -3,6 +3,11 @@
 # Setup a simple landing page
 #
 
+apache2-landing-pkg:
+  pkg:
+    - installed
+    - name: apache2
+
 /var/www/html:
   file:
     - recurse
@@ -34,17 +39,6 @@
     - target: /etc/apache2/sites-available/default.conf
     - unless: ls /etc/apache2/sites-enabled/default.conf
 
-/etc/apache2/sites-enabled/graphite.conf:
-  file:
-    - symlink
-    - target: /etc/apache2/sites-available/graphite.conf
-    - unless: /etc/apache2/sites-enabled/graphite.conf
-
-/etc/apache2/sites-enabled/grafana.conf:
-  file:
-    - managed
-    - contents: "alias /grafana /usr/share/grafana"
-
 apache2-svc:
   service:
     - running
@@ -53,6 +47,4 @@ apache2-svc:
       - file: /etc/apache2/sites-available
       - file: /etc/apache2/ports.conf
       - file: /etc/apache2/sites-enabled/default.conf
-      - file: /etc/apache2/sites-enabled/graphite.conf
-      - file: /etc/apache2/sites-enabled/grafana.conf
 

@@ -38,3 +38,16 @@ grafana-tgz:
     - managed
     - source: salt://monitor/usr/share/grafana/config.js
     - template: jinja
+
+/etc/apache2/sites-enabled/grafana.conf:
+  file:
+    - managed
+    - contents: "alias /grafana /usr/share/grafana"
+
+apache2-grafana-svc:
+  service:
+    - running
+    - name: apache2
+    - watch: 
+      - file: /etc/apache2/sites-enabled/grafana.conf
+
