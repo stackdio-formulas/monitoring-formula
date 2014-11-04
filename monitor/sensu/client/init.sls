@@ -68,3 +68,9 @@ sensu-client:
       - file: /etc/sensu/conf.d/client.json
       - file: /etc/default/sensu
 
+{% if 'monitor.sensu.server' in grains['roles'] %}
+restart_sensu:
+  cmd:
+    - run
+    - name: /usr/share/sensu/restart_sensu.sh
+{% endif %}

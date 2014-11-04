@@ -79,4 +79,9 @@ sensu-api:
       - file: /etc/sensu/conf.d/check_system.json
       {% endif %}
 
+/usr/share/sensu/restart_sensu.sh:
+  file:
+    - managed
+    - source: salt://monitor/usr/share/sensu/restart_sensu.sh
+    - mode: 755
 
