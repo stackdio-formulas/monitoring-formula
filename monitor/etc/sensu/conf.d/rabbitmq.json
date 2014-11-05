@@ -1,4 +1,4 @@
-{%- set hostname = salt['mine.get']('G@stack_id:' ~ grains.stack_id ~ ' and G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] -%}
+{%- set hostname = salt['mine.get']('G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] -%}
 {
   "rabbitmq": {
     "ssl": {
