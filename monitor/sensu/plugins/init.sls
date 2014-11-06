@@ -17,3 +17,4 @@
     - source: salt://monitor/etc/sensu/plugins
     - template: jinja
 
+

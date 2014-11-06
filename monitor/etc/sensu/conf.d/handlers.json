@@ -7,6 +7,17 @@
           "host": "localhost",
           "port": 2003
       }
+    },
+    "mailer-ses": {
+      "type": "pipe",
+      "command": "/etc/sensu/handlers/mailer-ses.rb"
     }
+  },
+  "mailer-ses": {
+      "mail_from": "{{ pillar.monitor.aws.ses_from }}",
+      "mail_to": "{{ pillar.monitor.aws.ses_to }}",
+      "aws_access_key": "{{ pillar.monitor.aws.access_key }}",
+      "aws_secret_key": "{{ pillar.monitor.aws.secret_key }}",
+      "aws_ses_endpoint": "{{ pillar.monitor.aws.ses_endpoint }}"
+  }
 }
-

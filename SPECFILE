@@ -69,3 +69,9 @@ pillar_defaults:
       password: CHANGEME
       email_addr: root@localhost
       storage_dir: /var/lib/graphite
+    aws:
+      access_key: CHANGEME
+      secret_key: CHANGEME
+      ses_from: CHANGEME
+      ses_to: CHANGEME
+      ses_endpoint: email.us-east-1.amazonaws.com
