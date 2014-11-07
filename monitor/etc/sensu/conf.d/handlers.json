@@ -11,6 +11,10 @@
     "mailer-ses": {
       "type": "pipe",
       "command": "/etc/sensu/handlers/mailer-ses.rb"
+    },
+    "sns": {
+      "type": "pipe",
+      "command": "/etc/sensu/handlers/sns.rb"
     }
   },
   "mailer-ses": {
@@ -19,5 +23,11 @@
       "aws_access_key": "{{ pillar.monitor.aws.access_key }}",
       "aws_secret_key": "{{ pillar.monitor.aws.secret_key }}",
       "aws_ses_endpoint": "{{ pillar.monitor.aws.ses_endpoint }}"
+  },
+  "sns": {
+    "topic_arn": "{{ pillar.monitor.aws.sns_topic }}",
+    "use_ami_role": "{{ pillar.monitor.aws.sns_role }}",
+    "access_key": "{{ pillar.monitor.aws.access_key }}",
+    "secret_key": "{{ pillar.monitor.aws.secret_key }}"
   }
 }
