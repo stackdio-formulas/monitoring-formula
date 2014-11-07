@@ -15,6 +15,10 @@
     "sns": {
       "type": "pipe",
       "command": "/etc/sensu/handlers/sns.rb"
+    },
+    "remediator": {
+      "type": "pipe",
+      "command": "/etc/sensu/handlers/remediator.rb"
     }
   },
   "mailer-ses": {
