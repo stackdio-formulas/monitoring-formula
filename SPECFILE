@@ -75,3 +75,5 @@ pillar_defaults:
       ses_from: CHANGEME
       ses_to: CHANGEME
       ses_endpoint: email.us-east-1.amazonaws.com
+      sns_topic: 
+      sns_role: false
