@@ -44,6 +44,11 @@ class CheckLog < Sensu::Plugin::Check::CLI
          :short => '-q PAT',
          :long => '--pattern PAT'
 
+  option :inverse,
+         :description => "Successful if pattern IS found",
+         :short => '-I',
+         :long => '--inverse'
+
   option :exclude,
          :description => "Pattern to exclude from matching",
          :short => '-E PAT',
@@ -104,17 +109,19 @@ class CheckLog < Sensu::Plugin::Check::CLI
     end
     n_warns_overall = 0
     n_crits_overall = 0
+    total_bytes_read = 0
     file_list.each do |log_file|
         begin
           open_log log_file
         rescue => e
           unknown "Could not open log file: #{e}"
         end
-        n_warns, n_crits = search_log
+        n_warns, n_crits, bytes_read = search_log
         n_warns_overall += n_warns
         n_crits_overall += n_crits
+        total_bytes_read += bytes_read
     end
-    message "#{n_warns_overall} warnings, #{n_crits_overall} criticals for pattern #{config[:pattern]}"
+    message "#{n_warns_overall} warnings, #{n_crits_overall} criticals for pattern #{config[:pattern]}, #{total_bytes_read} bytes read"
     if n_crits_overall > 0
       critical
     elsif n_warns_overall > 0
@@ -152,6 +159,7 @@ class CheckLog < Sensu::Plugin::Check::CLI
     bytes_read = 0
     n_warns = 0
     n_crits = 0
+    match_any = false
     if @bytes_to_skip > 0
       @log.seek(@bytes_to_skip, File::SEEK_SET)
     end
@@ -162,27 +170,57 @@ class CheckLog < Sensu::Plugin::Check::CLI
       else
          m = line.match(config[:pattern]) unless line.match(config[:exclude])
       end
-      if m
-        if m[1]
-          if config[:crit] && m[1].to_i > config[:crit]
-            n_crits += 1
-          elsif config[:warn] && m[1].to_i > config[:warn]
-            n_warns += 1
-          end
-        else
+      if config[:inverse]
+        if !m
           if config[:only_warn]
             n_warns += 1
           else
             n_crits += 1
           end
+        else
+          match_any = true
         end
+      else
+        if m
+          if m[1]
+            if config[:crit] && m[1].to_i > config[:crit]
+              n_crits += 1
+            elsif config[:warn] && m[1].to_i > config[:warn]
+              n_warns += 1
+            end
+          else
+            if config[:only_warn]
+              n_warns += 1
+            else
+              n_crits += 1
+            end
+          end
+        end
+      end
+    end
+
+    # assuming that no new log data is also a failure
+    if config[:inverse] && bytes_read == 0
+      if config[:only_warn]
+        n_warns += 1
+      else
+        n_crits += 1
+      end
+    end
+
+    # *any* matches while in inverse mode signals success
+    if config[:inverse] && match_any
+      if config[:only_warn]
+        n_warns = 0
+      else
+        n_crits = 0
       end
     end
     FileUtils.mkdir_p(File.dirname(@state_file))
     File.open(@state_file, 'w') do |file|
       file.write(@bytes_to_skip + bytes_read)
     end
-    [n_warns, n_crits]
+    [n_warns, n_crits, bytes_read]
   end
 
 end
