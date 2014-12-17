@@ -168,7 +168,12 @@ class CheckLog < Sensu::Plugin::Check::CLI
       if config[:case_insensitive]
          m = line.downcase.match(config[:pattern].downcase) unless line.match(config[:exclude])
       else
-         m = line.match(config[:pattern]) unless line.match(config[:exclude])
+         begin   
+             m = line.match(config[:pattern]) unless line.match(config[:exclude])
+         rescue Exception => e 
+             puts e.message
+             puts 'Failed line: #{line}'
+         end     
       end
       if config[:inverse]
         if !m
