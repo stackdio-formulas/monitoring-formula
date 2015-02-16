@@ -86,10 +86,20 @@ carbon-cache:
     - running
     - enable: true
 
+apache2-add-headers:
+  cmd:
+    - run
+    - name: a2enmod headers
+    - user: root
+    - require:
+      - pkg: all-packages
+
 apache2-graphite-svc:
   service:
     - running
     - name: apache2
+    - require:
+      - cmd: apache2-add-headers
     - watch: 
       - file: /etc/apache2/sites-enabled/graphite.conf
 
