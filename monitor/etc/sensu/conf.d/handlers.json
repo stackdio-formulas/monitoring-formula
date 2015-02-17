@@ -19,6 +19,14 @@
     "remediator": {
       "type": "pipe",
       "command": "/etc/sensu/handlers/remediator.rb"
+    },
+    "file-handler": {
+      "type": "pipe",
+      "command": "/etc/sensu/handlers/file-handler.rb"
+    },
+    "delete-hosts": {
+      "type": "pipe",
+      "command": "/etc/sensu/handlers/delete-hosts.rb"
     }
   },
   "mailer-ses": {
