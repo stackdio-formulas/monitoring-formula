@@ -8,57 +8,65 @@
 
 require 'rubygems' if RUBY_VERSION < '1.9.0'
 require 'sensu-handler'
+require 'net/http'
+require 'uri'
+require 'json'
 
 
 class Deleter < Sensu::Handler
-  def short_name
-    @event['client']['name'] + '/' + @event['check']['name']
-  end
-
-  def action_to_string
-   @event['action'].eql?('resolve') ? "RESOLVED" : "ALERT"
-  end
-
   def handle
     params = {
-      :mail_to   => settings['mailer-ses']['mail_to'],
-      :mail_from => settings['mailer-ses']['mail_from'],
-      :aws_access_key => settings['mailer-ses']['aws_access_key'],
-      :aws_secret_key => settings['mailer-ses']['aws_secret_key'],
-      :aws_ses_endpoint => settings['mailer-ses']['aws_ses_endpoint']
+      :stackdio_url      => settings['delete-hosts']['stackdio_url'],
+      :stackdio_user     => settings['delete-hosts']['stackdio_user'],
+      :stackdio_password => settings['delete-hosts']['stackdio_password']
     }
 
-    body = <<-BODY.gsub(/^ {14}/, '')
-            #{@event['check']['output']}
-            Host: #{@event['client']['name']}
-            Timestamp: #{Time.at(@event['check']['issued'])}
-            Address:  #{@event['client']['address']}
-            Check Name:  #{@event['check']['name']}
-            Command:  #{@event['check']['command']}
-            Status:  #{@event['check']['status']}
-            Occurrences:  #{@event['occurrences']}
-          BODY
-    subject = "#{action_to_string} - #{short_name}: #{@event['check']['notification']}"
+    host_fqdn = @event['client']['address']
 
-    ses = AWS::SES::Base.new(
-      :access_key_id     => params[:aws_access_key],
-      :secret_access_key => params[:aws_secret_key],
-      :server            => params[:aws_ses_endpoint]
-    )
+    if @event['check']['status'] > 0
+        uri = URI.parse(params[:stackdio_url])
 
-    begin
-      timeout 10 do
-        ses.send_email(
-          :to        => params[:mail_to],
-          :source    => params[:mail_from],
-          :subject   => subject,
-          :text_body => body
-        )
+        http = Net::HTTP.new(uri.host, uri.port)
+        http.use_ssl = (uri.scheme == "https")
 
-        puts 'mail -- sent alert for ' + short_name + ' to ' + params[:mail_to]
-      end
-    rescue Timeout::Error
-      puts 'mail -- timed out while attempting to ' + @event['action'] + ' an incident -- ' + short_name
+        req = Net::HTTP::Get.new('/api/admin/stacks/')
+        req['Accept'] = 'application/json'
+        req.basic_auth(params[:stackdio_user], params[:stackdio_password])
+
+        response = http.request(req)
+
+        stacks = JSON.parse(response.body())
+
+        found = false
+
+        stacks['results'].each do |stack|
+            req = Net::HTTP::Get.new(stack['fqdns'])
+            req['Accept'] = 'application/json'
+            req.basic_auth(params[:stackdio_user], params[:stackdio_password])
+
+            response = http.request(req)
+
+            fqdns = JSON.parse(response.body())
+
+            # We found the host, we don't want to delete it
+            if fqdns.include? host_fqdn
+                found = true
+                break
+            end
+        end
+
+        # We didn't find the fqdn anywhere on stackdio, that means we should delete it on sensu
+        if !found
+            puts "Deleting host: #{host_fqdn}"
+
+            del_req = api_request(:DELETE, '/clients/' + @event['client']['name'])
+
+            if del_req.code != '202'
+                puts 'Sensu delete API call failed'
+            else
+                puts "Successfully deleted host: #{host_fqdn}"
+            end
+        end
     end
   end
 end

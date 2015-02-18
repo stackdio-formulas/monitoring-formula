@@ -7,7 +7,7 @@
     "address": "{{ hostname }}",
     "subscriptions": {{ subscriptions | json }},
     "keepalive": {
-      "handlers": ["delete-hosts", "file-handler"]
+      "handlers": ["delete-hosts"]
     }
   }
 }

@@ -41,5 +41,10 @@
     "use_ami_role": "{{ pillar.monitor.aws.sns_role }}",
     "access_key": "{{ pillar.monitor.aws.access_key }}",
     "secret_key": "{{ pillar.monitor.aws.secret_key }}"
+  },
+  "delete-hosts": {
+    "stackdio_url": "{{ pillar.monitor.stackdio.url }}",
+    "stackdio_user": "{{ pillar.monitor.stackdio.user }}",
+    "stackdio_password": "{{ pillar.monitor.stackdio.password }}"
   }
 }
