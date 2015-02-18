@@ -77,3 +77,7 @@ pillar_defaults:
       ses_endpoint: email.us-east-1.amazonaws.com
       sns_topic: 
       sns_role: false
+    stackdio:
+      url: CHANGEME
+      user: CHANGEME
+      password: CHANGEME

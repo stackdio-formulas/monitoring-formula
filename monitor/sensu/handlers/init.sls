@@ -37,4 +37,6 @@
         - HANDLERS_DIR: /etc/sensu/handlers
         - PATH: /opt/sensu/embedded/bin:$PATH:$PLUGINS_DIR:$HANDLERS_DIR
         - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0:$GEM_PATH
+    - require:
+        - pkg: sensu-server-pkg
 {% endfor %}

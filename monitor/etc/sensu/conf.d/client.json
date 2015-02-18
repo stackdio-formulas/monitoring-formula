@@ -5,6 +5,9 @@
   "client": {
     "name": "{{ hostname }}",
     "address": "{{ hostname }}",
-    "subscriptions": {{ subscriptions | json }}
+    "subscriptions": {{ subscriptions | json }},
+    "keepalive": {
+      "handlers": ["delete-hosts"]
+    }
   }
 }
