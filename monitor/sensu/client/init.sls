@@ -13,6 +13,8 @@ sensu-client-pkg:
   pkg:
     - installed
     - name: sensu
+    - require:
+      - pkgrepo: sensu-repo
 
 /etc/sensu/ssl/cert.pem:
   file:
@@ -73,4 +75,6 @@ restart_sensu:
   cmd:
     - run
     - name: /usr/share/sensu/restart_sensu.sh
+    - require:
+      - service: sensu-client
 {% endif %}

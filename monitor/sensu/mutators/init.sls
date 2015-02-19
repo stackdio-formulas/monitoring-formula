@@ -16,6 +16,10 @@
     - recurse: true
     - source: salt://monitor/etc/sensu/mutators
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
+    - require_in:
+      - service: sensu-server
 
 /etc/sensu/conf.d/mutators.json:
   file:
@@ -23,4 +27,8 @@
     - makedirs: true
     - source: salt://monitor/etc/sensu/conf.d/mutators.json
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
+    - require_in:
+      - service: sensu-server
 

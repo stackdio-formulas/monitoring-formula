@@ -19,17 +19,20 @@ components:
     description: Sensu plugins
     sls_path: monitor.sensu.plugins
 
-  - title: Sensu Mutators
-    description: Sensu mutators
-    sls_path: monitor.sensu.mutators
-
-  - title: Sensu Handlers
-    description: Sensu handlers
-    sls_path: monitor.sensu.handlers
-
-  - title: Sensu Extensions
-    description: Sensu extensions
-    sls_path: monitor.sensu.extensions
+# I don't think there's ever a reason to run these states explicitly, since they're always included
+#    in monitor.sensu.server, and are not meant to be run on clients
+#
+#  - title: Sensu Mutators
+#    description: Sensu mutators
+#    sls_path: monitor.sensu.mutators
+#
+#  - title: Sensu Handlers
+#    description: Sensu handlers
+#    sls_path: monitor.sensu.handlers
+#
+#  - title: Sensu Extensions
+#    description: Sensu extensions
+#    sls_path: monitor.sensu.extensions
 
   - title: Graphite
     description: Graphite

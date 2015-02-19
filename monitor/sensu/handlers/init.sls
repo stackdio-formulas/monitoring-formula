@@ -16,6 +16,10 @@
     - recurse: true
     - source: salt://monitor/etc/sensu/handlers
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
+    - require_in:
+      - service: sensu-server
 
 /etc/sensu/conf.d/handlers.json:
   file:
@@ -23,6 +27,10 @@
     - makedirs: true
     - source: salt://monitor/etc/sensu/conf.d/handlers.json
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
+    - require_in:
+      - service: sensu-server
 
 # The following is a list of dependencies for any of the handlers. Because
 # we're using the embedded ruby included with Sensu, we need to use cmd.run to
@@ -39,4 +47,6 @@
         - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0:$GEM_PATH
     - require:
         - pkg: sensu-server-pkg
+    - require_in:
+        - service: sensu-server
 {% endfor %}

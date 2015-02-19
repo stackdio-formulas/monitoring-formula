@@ -5,3 +5,5 @@ redis-server:
   service:
     - running
     - enable: true
+    - require:
+      - pkg: redis-server

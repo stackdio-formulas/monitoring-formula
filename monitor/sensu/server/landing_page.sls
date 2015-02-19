@@ -14,10 +14,14 @@ apache2-landing-pkg:
     - source: salt://monitor/var/www/html
     - template: jinja
     - makedirs: true
+    - require:
+      - pkg: apache2-landing-pkg
 
 /etc/apache2/sites-enabled/000-default.conf:
   file:
-    - absent 
+    - absent
+    - require:
+      - pkg: apache2-landing-pkg
 
 /etc/apache2/sites-available:
   file:
@@ -26,23 +30,35 @@ apache2-landing-pkg:
     - template: jinja
     - clean: true
     - makedirs: true
+    - require:
+      - pkg: apache2-landing-pkg
 
 /etc/apache2/ports.conf:
   file:
     - managed
     - source: salt://monitor/etc/apache2/ports.conf
     - template: jinja
+    - require:
+      - pkg: apache2-landing-pkg
 
 /etc/apache2/sites-enabled/default.conf:
   file:
     - symlink
     - target: /etc/apache2/sites-available/default.conf
     - unless: ls /etc/apache2/sites-enabled/default.conf
+    - require:
+      - pkg: apache2-landing-pkg
 
 apache2-svc:
   service:
     - running
     - name: apache2
+    - require:
+      - file: /var/www/html
+      - file: /etc/apache2/sites-enabled/000-default.conf
+      - file: /etc/apache2/sites-available
+      - file: /etc/apache2/ports.conf
+      - file: /etc/apache2/sites-enabled/default.conf
     - watch: 
       - file: /etc/apache2/sites-available
       - file: /etc/apache2/ports.conf
