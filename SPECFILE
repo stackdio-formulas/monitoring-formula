@@ -51,6 +51,8 @@ pillar_defaults:
       client:
         subscriptions:
           - all
+      server:
+        fqdn: localhost
       api:
         username: admin 
         password: CHANGEME
@@ -81,3 +83,4 @@ pillar_defaults:
       url: CHANGEME
       user: CHANGEME
       password: CHANGEME
+      admin: false
