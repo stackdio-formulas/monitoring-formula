@@ -18,7 +18,8 @@ class Deleter < Sensu::Handler
     params = {
       :stackdio_url      => settings['delete-hosts']['stackdio_url'],
       :stackdio_user     => settings['delete-hosts']['stackdio_user'],
-      :stackdio_password => settings['delete-hosts']['stackdio_password']
+      :stackdio_password => settings['delete-hosts']['stackdio_password'],
+      :stackdio_admin    => settings['delete-hosts']['stackdio_admin']
     }
 
     host_fqdn = @event['client']['address']
@@ -29,7 +30,11 @@ class Deleter < Sensu::Handler
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = (uri.scheme == "https")
 
-        req = Net::HTTP::Get.new('/api/admin/stacks/')
+        if params[:stackdio_admin]
+            req = Net::HTTP::Get.new('/api/admin/stacks/')
+        else
+            req = Net::HTTP::Get.new('/api/stacks/')
+        end
         req['Accept'] = 'application/json'
         req.basic_auth(params[:stackdio_user], params[:stackdio_password])
 

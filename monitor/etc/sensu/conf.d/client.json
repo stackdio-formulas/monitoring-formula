@@ -1,4 +1,4 @@
-{%- set hostname = salt['mine.get']('G@fqdn:' ~ grains.fqdn, 'grains.items', 'compound').values()[0]['fqdn'] -%}
+{%- set hostname = grains.fqdn -%}
 {%- set custom_subscriptions = salt['pillar.get']('custom_sensu_subscriptions', []) -%}
 {%- set subscriptions = salt['pillar.get']('monitor:sensu:client:subscriptions') + [hostname] + custom_subscriptions -%}
 {

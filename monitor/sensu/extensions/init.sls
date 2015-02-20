@@ -16,4 +16,8 @@
     - recurse: true
     - source: salt://monitor/etc/sensu/extensions
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
+    - require_in:
+      - service: sensu-server
 

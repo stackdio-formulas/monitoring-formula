@@ -19,18 +19,6 @@ components:
     description: Sensu plugins
     sls_path: monitor.sensu.plugins
 
-  - title: Sensu Mutators
-    description: Sensu mutators
-    sls_path: monitor.sensu.mutators
-
-  - title: Sensu Handlers
-    description: Sensu handlers
-    sls_path: monitor.sensu.handlers
-
-  - title: Sensu Extensions
-    description: Sensu extensions
-    sls_path: monitor.sensu.extensions
-
   - title: Graphite
     description: Graphite
     sls_path: monitor.graphite
@@ -51,6 +39,8 @@ pillar_defaults:
       client:
         subscriptions:
           - all
+      server:
+        fqdn: localhost
       api:
         username: admin 
         password: CHANGEME
@@ -81,3 +71,4 @@ pillar_defaults:
       url: CHANGEME
       user: CHANGEME
       password: CHANGEME
+      admin: false

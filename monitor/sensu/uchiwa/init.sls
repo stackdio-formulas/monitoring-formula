@@ -15,10 +15,14 @@ uchiwa-pkg:
     - user: uchiwa
     - group: sensu
     - template: jinja
+    - require:
+      - pkg: uchiwa-pkg
 
 uchiwa-svc:
   service:
     - running
     - name: uchiwa
     - enable: true
+    - require:
+      - file: /etc/sensu/uchiwa.json
 

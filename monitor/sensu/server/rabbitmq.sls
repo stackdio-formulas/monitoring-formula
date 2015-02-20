@@ -39,6 +39,10 @@ rabbitmq-server-pkg:
   pkg:
     - installed
     - name: rabbitmq-server
+    - require:
+#      - pkgrepo: rabbitmq-repo
+      - file: /etc/apt/sources.list.d/rabbitmq.list
+      - cmd: rabbitmq-repo-key
 
 {% endif %}
 
@@ -47,42 +51,59 @@ rabbitmq-server-pkg:
     - managed
     - contents_pillar: monitor:sensu:ssl:server_cacert
     - makedirs: true
+    - require:
+      - pkg: rabbitmq-server-pkg
 
 /etc/rabbitmq/ssl/cert.pem:
   file:
     - managed
     - contents_pillar: monitor:sensu:ssl:server_cert
     - makedirs: true
+    - require:
+      - pkg: rabbitmq-server-pkg
 
 /etc/rabbitmq/ssl/key.pem:
   file:
     - managed
     - contents_pillar: monitor:sensu:ssl:server_key
     - makedirs: true
+    - require:
+      - pkg: rabbitmq-server-pkg
 
 /etc/rabbitmq/rabbitmq.config:
   file:
     - managed
     - source: salt://monitor/etc/rabbitmq/rabbitmq.config
     - makedirs: true
+    - require:
+      - pkg: rabbitmq-server-pkg
 
 create_vhost:
   cmd:
     - run
     - name: "rabbitmqctl add_vhost {{ rabbit_vhost }}"
     - unless: 'rabbitmqctl list_vhosts | grep "{{ rabbit_vhost }}"'
+    - require:
+      - file: /etc/rabbitmq/ssl/cacert.pem
+      - file: /etc/rabbitmq/ssl/cert.pem
+      - file: /etc/rabbitmq/ssl/key.pem
+      - file: /etc/rabbitmq/rabbitmq.config
 
 rabbit_user:
   cmd:
     - run
     - name: 'rabbitmqctl add_user {{ rabbit_username }} {{ rabbit_password }}'
     - unless: 'rabbitmqctl list_users | grep {{ rabbit_username }}'
+    - require:
+      - cmd: create_vhost
 
 rabbit_permissions:
   cmd:
     - run
     - name: 'rabbitmqctl set_permissions -p {{ rabbit_vhost }} {{ rabbit_username }} ".*" ".*" ".*"'
     - unless: 'rabbitmqctl list_permissions -p {{ rabbit_vhost }} | grep -v "{{ rabbit_vhost }}" | grep {{rabbit_username}}'
+    - require:
+      - cmd: rabbit_user
 
 #rabbit_web_console:
 #  cmd:
@@ -97,6 +118,8 @@ rabbitmq-server-svc:
     - running
     - name: rabbitmq-server
     - enable: true
+    - require:
+      - cmd: rabbit_permissions
     - watch:
       - file: /etc/rabbitmq/rabbitmq.config
       - file: /etc/rabbitmq/ssl/cacert.pem

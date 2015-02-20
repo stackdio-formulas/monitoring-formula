@@ -45,6 +45,7 @@
   "delete-hosts": {
     "stackdio_url": "{{ pillar.monitor.stackdio.url }}",
     "stackdio_user": "{{ pillar.monitor.stackdio.user }}",
-    "stackdio_password": "{{ pillar.monitor.stackdio.password }}"
+    "stackdio_password": "{{ pillar.monitor.stackdio.password }}",
+    "stackdio_admin": {{ pillar.monitor.stackdio.admin | json }}
   }
 }

@@ -1,11 +1,10 @@
-{%- set hostname = salt['mine.get']('G@roles:monitor.sensu.server', 'grains.items', 'compound').values()[0]['fqdn'] -%}
 {
   "rabbitmq": {
     "ssl": {
       "cert_chain_file": "/etc/sensu/ssl/cert.pem",
       "private_key_file": "/etc/sensu/ssl/key.pem"
     },
-    "host": "{{ hostname }}",
+    "host": "{{ pillar.monitor.sensu.server.fqdn }}",
     "port": 5671,
     "vhost": "{{ pillar.monitor.sensu.rabbitmq.vhost }}",
     "user": "{{ pillar.monitor.sensu.rabbitmq.username }}",

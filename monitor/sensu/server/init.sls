@@ -20,6 +20,10 @@ sensu-server-pkg:
   pkg:
     - installed
     - name: sensu
+    - require:
+      - pkgrepo: sensu-repo
+    - require_in:
+      - file: /etc/sensu/plugins
 
 {% if salt['pillar.get']('monitor:sensu:check_system') %}
 /etc/sensu/conf.d/check_system.json:
@@ -28,6 +32,13 @@ sensu-server-pkg:
     - makedirs: true
     - source: salt://monitor/etc/sensu/conf.d/check_system.json
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
+    - require_in:
+      - service: sensu-server
+    - watch_in:
+      - service: sensu-server
+      - service: sensu-api
 {% endif %}
 
 /etc/sensu/ssl/cert.pem:
@@ -52,18 +63,24 @@ sensu-server-pkg:
     - makedirs: true
     - source: salt://monitor/etc/sensu/conf.d/config.json
     - template: jinja
+    - require:
+      - pkg: sensu-server-pkg
 
 sensu-server:
   service:
     - running
     - enable: true
+    - require:
+      - file: /etc/sensu/plugins
+      - file: /etc/sensu/ssl/cert.pem
+      - file: /etc/sensu/ssl/key.pem
+      - file: /etc/sensu/conf.d/config.json
+      - service: rabbitmq-server-svc
+      - service: redis-server
     - watch:
       - file: /etc/sensu/ssl/cert.pem
       - file: /etc/sensu/ssl/key.pem
       - file: /etc/sensu/conf.d/config.json
-      {% if salt['pillar.get']('monitor:sensu:check_system') %}
-      - file: /etc/sensu/conf.d/check_system.json
-      {% endif %}
 
 sensu-api:
   service:
@@ -75,13 +92,12 @@ sensu-api:
       - file: /etc/sensu/ssl/cert.pem
       - file: /etc/sensu/ssl/key.pem
       - file: /etc/sensu/conf.d/config.json
-      {% if salt['pillar.get']('monitor:sensu:check_system') %}
-      - file: /etc/sensu/conf.d/check_system.json
-      {% endif %}
 
 /usr/share/sensu/restart_sensu.sh:
   file:
     - managed
     - source: salt://monitor/usr/share/sensu/restart_sensu.sh
     - mode: 755
+    - require:
+      - pkg: sensu-server-pkg
 
