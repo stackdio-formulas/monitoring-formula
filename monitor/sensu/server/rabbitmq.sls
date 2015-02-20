@@ -40,7 +40,7 @@ rabbitmq-server-pkg:
     - installed
     - name: rabbitmq-server
     - require:
-      - pkgrepo: rabbitmq-repo
+#      - pkgrepo: rabbitmq-repo
       - file: /etc/apt/sources.list.d/rabbitmq.list
       - cmd: rabbitmq-repo-key
 
