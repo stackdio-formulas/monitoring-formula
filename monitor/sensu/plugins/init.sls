@@ -17,4 +17,21 @@
     - source: salt://monitor/etc/sensu/plugins
     - template: jinja
 
-
+# The following is a list of dependencies for any of the handlers. Because
+# we're using the embedded ruby included with Sensu, we need to use cmd.run to
+# manipulate the GEM_PATH (vs the more salty gem.installed).
+{% for gem in [ 'aws-ses', ] %}
+{{gem}}-gem:
+  cmd.run:
+    - name: /opt/sensu/embedded/bin/gem install {{gem}}
+    - unless: /opt/sensu/embedded/bin/gem list --local | grep {{gem}}
+    - env:
+        - PLUGINS_DIR: /etc/sensu/plugins
+        - HANDLERS_DIR: /etc/sensu/handlers
+        - PATH: /opt/sensu/embedded/bin:$PATH:$PLUGINS_DIR:$HANDLERS_DIR
+        - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0:$GEM_PATH
+    - require:
+        - pkg: sensu-server-pkg
+    - require_in:
+        - service: sensu-server
+{% endfor %}
