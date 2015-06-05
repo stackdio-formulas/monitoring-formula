@@ -89,21 +89,13 @@ class SQSMsgs < Sensu::Plugin::Check::CLI
          default: -1,
          proc: proc(&:to_i)
 
-  def aws_config
-    hash = {}
-    hash.update access_key_id: config[:aws_access_key], secret_access_key: config[:aws_secret_access_key]\
-      if config[:aws_access_key] && config[:aws_secret_access_key]
-    hash.update region: config[:aws_region]
-    if (not hash.has_key?(:access_key_id) or not hash.has_key?(:secret_access_key))
-        puts 'Must supply AWS credentials'
-        exit 1
-    end
-    hash
-  end
-
   def run
-    AWS.config aws_config
-    sqs = AWS::SQS.new
+    sqs = AWS::SQS.new(
+      access_key_id: config[:aws_access_key],
+      secret_access_key: config[:aws_secret_access_key],
+      region: config[:aws_region]
+    )
+
     messages = sqs.queues.named(config[:queue]).approximate_number_of_messages
 
     if (config[:crit_under] >= 0 && messages < config[:crit_under]) || (config[:crit_over] >= 0 && messages > config[:crit_over])
