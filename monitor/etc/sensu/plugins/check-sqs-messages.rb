@@ -12,7 +12,7 @@
 #   Linux
 #
 # DEPENDENCIES:
-#   gem: aws-sdk-v1
+#   gem: aws-sdk
 #   gem: sensu-plugin
 #
 # USAGE:
@@ -27,22 +27,27 @@
 #   for details.
 #
 
-require 'rubygems' if RUBY_VERSION < '1.9.0'
+###
+### Updated by charlie.penner@digitalreasoning.com to actually pull AWS
+### credentials from the environment.
+### 
+
 require 'sensu-plugin/check/cli'
 require 'aws-sdk-v1'
 
+#
+# Check SQS Messages
+#
 class SQSMsgs < Sensu::Plugin::Check::CLI
   option :aws_access_key,
          short: '-a AWS_ACCESS_KEY',
          long: '--aws-access-key AWS_ACCESS_KEY',
-         description: "AWS Access Key. Either set ENV['AWS_ACCESS_KEY_ID'] or provide it as an option",
-         required: true
+         description: "AWS Access Key. Either set ENV['AWS_ACCESS_KEY_ID'] or provide it as an option"
 
   option :aws_secret_access_key,
          short: '-s AWS_SECRET_ACCESS_KEY',
          long: '--aws-secret-access-key AWS_SECRET_ACCESS_KEY',
-         description: "AWS Secret Access Key. Either set ENV['AWS_SECRET_ACCESS_KEY'] or provide it as an option",
-         required: true
+         description: "AWS Secret Access Key. Either set ENV['AWS_SECRET_ACCESS_KEY'] or provide it as an option"
 
   option :aws_region,
          description: 'AWS Region (such as us-east-1)',
@@ -89,6 +94,10 @@ class SQSMsgs < Sensu::Plugin::Check::CLI
     hash.update access_key_id: config[:aws_access_key], secret_access_key: config[:aws_secret_access_key]\
       if config[:aws_access_key] && config[:aws_secret_access_key]
     hash.update region: config[:aws_region]
+    if (not hash.has_key?(:access_key_id) or not hash.has_key?(:secret_access_key))
+        puts 'Must supply AWS credentials'
+        exit 1
+    end
     hash
   end
 
