@@ -70,6 +70,12 @@ sensu-client:
       - file: /etc/sensu/conf.d/client.json
       - file: /etc/default/sensu
 
+/etc/default/sensu-client:
+  file:
+    - managed
+    - source: salt://monitor/etc/default/sensu-client
+    - template: jinja
+
 {% if 'monitor.sensu.server' in grains['roles'] %}
 restart_sensu:
   cmd:

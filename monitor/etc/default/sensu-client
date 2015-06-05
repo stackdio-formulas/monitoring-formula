@@ -1,0 +1,3 @@
+# exporting AWS credentials for use by plugins
+export AWS_ACCESS_KEY_ID={{ pillar.monitor.aws.access_key }}
+export AWS_SECRET_ACCESS_KEY={{ pillar.monitor.aws.secret_key }}
