@@ -93,6 +93,5 @@ SDATE=`$date +%s -d "$DATE"`
 TYPE=`echo $LINE |awk '{print $4}'`
 VALUE=`echo $LINE |awk '{print $6}'`
 PAYLOAD="$METRIC_PATH.$TYPE $VALUE $SDATE"
-echo $PAYLOAD
-#echo "$PAYLOAD" |$nc $GRAPH_HOST 2003
+echo "$PAYLOAD" |$nc $GRAPH_HOST 2003
 done
