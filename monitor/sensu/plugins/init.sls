@@ -17,6 +17,13 @@
     - source: salt://monitor/etc/sensu/plugins
     - template: jinja
 
+gem-pkgs:
+  pkg:
+    - installed
+    - pkgs:
+      - gcc
+      - zlib-devel
+
 # The following is a list of dependencies for any of the handlers. Because
 # we're using the embedded ruby included with Sensu, we need to use cmd.run to
 # manipulate the GEM_PATH (vs the more salty gem.installed).
@@ -32,4 +39,5 @@
         - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0:$GEM_PATH
     - require:
         - file: /etc/sensu/plugins
+        - pkg: gem-pkgs
 {% endfor %}
