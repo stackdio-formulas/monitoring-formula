@@ -22,6 +22,7 @@ gem-pkgs:
     - installed
     - pkgs:
       - gcc
+      - patch
       - zlib-devel
 
 # The following is a list of dependencies for any of the handlers. Because
