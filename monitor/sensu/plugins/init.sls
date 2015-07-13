@@ -36,8 +36,7 @@ gem-pkgs:
     - env:
         - PLUGINS_DIR: /etc/sensu/plugins
         - HANDLERS_DIR: /etc/sensu/handlers
-        - PATH: /opt/sensu/embedded/bin:$PATH:$PLUGINS_DIR:$HANDLERS_DIR
-        - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0:$GEM_PATH
+        - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0
     - require:
         - file: /etc/sensu/plugins
         - pkg: gem-pkgs
