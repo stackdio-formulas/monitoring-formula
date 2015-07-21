@@ -9,14 +9,12 @@
 
 
 date=/bin/date
-nc=/usr/bin/nc
 LOG_TAIL=/usr/local/bin/pygtail
 
 
 HELP () {
 	echo ""
-    echo "send_metrics.sh -g value -m value -l value "
-	echo "-g | --GRAPH_HOST --> Host name of Graphite server "
+    echo "send_metrics.sh -m value -l value -s value"
     echo "-m | --METRIC_PATH --> Metric path in graphite "
     echo "-l | --LOG_FILE -->  Log file to check"
     echo "-s | --STRING --> String to search for in the log file"
@@ -29,9 +27,6 @@ while [ "$1" != "" ]; do
     case $1 in
         -m | --METRIC_PATH )   shift
                                 METRIC_PATH=$1
-                                ;;
-        -g | --GRAPH_HOST )    shift
-								GRAPH_HOST=$1
                                 ;;
         -l | --LOG_FILE )	   shift
         						LOG_FILE=$1
@@ -52,13 +47,6 @@ done
 if [[ -z $METRIC_PATH ]]; then
 	echo ""
 	echo "Metric path not set"
-	HELP
-	exit 1
-fi
-
-if [[ -z $GRAPH_HOST ]]; then
-	echo ""
-	echo "Graphite host not set"
 	HELP
 	exit 1
 fi
@@ -93,5 +81,5 @@ SDATE=`$date +%s -d "$DATE"`
 TYPE=`echo $LINE |awk '{print $4}'`
 VALUE=`echo $LINE |awk '{print $6}'`
 PAYLOAD="$METRIC_PATH.$TYPE $VALUE $SDATE"
-echo "$PAYLOAD" |$nc $GRAPH_HOST 2003
+echo "$PAYLOAD" 
 done
