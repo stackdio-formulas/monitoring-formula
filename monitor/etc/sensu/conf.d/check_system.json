@@ -25,6 +25,12 @@
       "command": "/etc/sensu/plugins/vmstat-metrics.rb --scheme sensu.:::name:::",
       "interval": 60,
       "subscribers": [ "all" ]
+    },
+    "fs_checks": {
+      "handlers": ["mailer-ses"],
+      "command": "/etc/sensu/plugins/check-disk-usages.rb -w 75 -c 80",
+      "interval": 60,
+      "subscibers": ["all"]
     }
   }
 }

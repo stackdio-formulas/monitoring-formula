@@ -24,6 +24,8 @@ gem-pkgs:
       - gcc
       - patch
       - zlib-devel
+      - sensu-plugins-disk-checks
+      - sys-filesystem
 
 # The following is a list of dependencies for any of the handlers. Because
 # we're using the embedded ruby included with Sensu, we need to use cmd.run to
