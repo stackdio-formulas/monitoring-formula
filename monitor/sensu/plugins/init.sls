@@ -26,7 +26,7 @@ gem-pkgs:
 {% if grains["os_family"] == "RedHat" %}
       - zlib-devel
 {% elif grains["os_family"] == "Debian" %}
-      - zlib-dev
+      - zlib1g-dev
 {% endif %}
 
 # The following is a list of dependencies for any of the handlers. Because
