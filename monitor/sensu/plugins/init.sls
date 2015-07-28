@@ -23,12 +23,16 @@ gem-pkgs:
     - pkgs:
       - gcc
       - patch
+{% if grains["os_family"] == "RedHat" %}
       - zlib-devel
+{% elif grains["os_family"] == "Debian" %}
+      - zlib-dev
+{% endif %}
 
 # The following is a list of dependencies for any of the handlers. Because
 # we're using the embedded ruby included with Sensu, we need to use cmd.run to
 # manipulate the GEM_PATH (vs the more salty gem.installed).
-{% for gem in [ 'aws-sdk-v1', ] %}
+{% for gem in [ 'aws-sdk-v1', 'sensu-plugins-disk-checks', 'sys-filesystem', ] %}
 {{gem}}-gem:
   cmd.run:
     - name: /opt/sensu/embedded/bin/gem install {{gem}}
