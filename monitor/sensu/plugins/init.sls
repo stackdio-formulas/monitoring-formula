@@ -23,7 +23,11 @@ gem-pkgs:
     - pkgs:
       - gcc
       - patch
+{% if grains["os_family"] == "RedHat" %}
       - zlib-devel
+{% elif grains["os_family"] == "Debian" %}
+      - zlib1g-dev
+{% endif %}
 
 # The following is a list of dependencies for any of the handlers. Because
 # we're using the embedded ruby included with Sensu, we need to use cmd.run to
