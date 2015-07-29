@@ -28,9 +28,9 @@
     },
     "fs_checks": {
       "handlers": ["mailer-ses"],
-      "command": "/opt/sensu/embedded/bin/check-disk-usage.rb -w 85 -c 90",
+      "command": "/opt/sensu/embedded/bin/check-disk-usage.rb -w 75 -c 85",
       "interval": 60,
-      "subscribers": ["sysmon"]
+      "subscribers": ["all"]
     }
   }
 }
