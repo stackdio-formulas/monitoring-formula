@@ -28,9 +28,15 @@
     },
     "fs_checks": {
       "handlers": ["mailer-ses"],
+<<<<<<< HEAD
+      "command": "/opt/sensu/embedded/bin/check-disk-usage.rb -w 75 -c 85",
+      "interval": 60,
+      "subscribers": ["all"]
+=======
       "command": "/etc/sensu/plugins/check-disk-usages.rb -w 75 -c 80",
       "interval": 60,
       "subscibers": ["all"]
+>>>>>>> master
     }
   }
 }
