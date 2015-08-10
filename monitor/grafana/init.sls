@@ -22,6 +22,17 @@ elasticsearch-svc:
     - require:
       - pkg: elasticsearch-pkgs
 
+{% set marvel_version = salt['pillar.get']('elasticsearch:marvel:version', 'latest') %}
+
+install_marvel:
+  cmd:
+  - run
+  - name: '/usr/share/elasticsearch/bin/plugin -i elasticsearch/marvel/{{ marvel_version }}'
+  - require:
+    - pkg: elasticsearch-pkgs
+  - unless: '/usr/share/elasticsearch/bin/plugin -l | grep marvel'
+
+
 # Kill apache first - so we can restart it later after we update the grafana conf file
 apache2-grafana-svc-kill:
   service:
