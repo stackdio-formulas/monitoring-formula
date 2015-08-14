@@ -59,6 +59,9 @@ pillar_defaults:
       password: CHANGEME
       email_addr: root@localhost
       storage_dir: /var/lib/graphite
+    grafana:
+      username: admin
+      password: CHANGME
     aws:
       access_key: CHANGEME
       secret_key: CHANGEME
