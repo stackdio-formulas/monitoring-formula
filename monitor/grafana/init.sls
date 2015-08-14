@@ -1,70 +1,47 @@
 
-elasticsearch-repo:
+#
+# install and configure Graphana
+#
+
+#
+# add the repo
+#
+grafana-repo:
   pkgrepo:
     - managed
-    - key_url: http://packages.elasticsearch.org/GPG-KEY-elasticsearch
-    - name: deb http://packages.elasticsearch.org/elasticsearch/1.0/debian stable main
+{% if grains["os_family"] == "Debian" %}
+    - key_url: https://packagecloud.io/gpg.key
+    - name: deb https://packagecloud.io/grafana/stable/debian/ wheezy main
     - refresh_db: true
+{% elif grains["os_family"] == "RedHat" %}
+    - humanname: grafana
+    - baseurl: http://repos.sensuapp.org/yum/el/$releasever/$basearch/
+    - gpgcheck: 0
+{% endif %}
 
-elasticsearch-pkgs:
+#
+# Install the pkg
+#
+grafana-pkg:
   pkg:
     - installed
-    - pkgs:
-      - elasticsearch
-      - openjdk-7-jre-headless
+    - name: grafana
     - require:
-      - pkgrepo: elasticsearch-repo
+      - pkgrepo: grafana-repo
 
-elasticsearch-svc:
+#
+# Insert config file stuff here
+# XXXX
+
+
+
+#
+# start service
+#
+
+grafana:
   service:
     - running
-    - name: elasticsearch
+    - enable: true
     - require:
-      - pkg: elasticsearch-pkgs
-
-# Kill apache first - so we can restart it later after we update the grafana conf file
-apache2-grafana-svc-kill:
-  service:
-    - dead
-
-grafana-tgz:
-  archive:
-    - extracted
-    - name: /usr/share
-    - source: http://grafanarel.s3.amazonaws.com/grafana-1.5.3.tar.gz
-    - source_hash: md5=fef11092897935fe5d1e11faae0d7507
-    - tar_options: z
-    - archive_format: tar
-    - if_missing: /usr/share/grafana-1.5.3
-
-/usr/share/grafana:
-  file:
-    - symlink
-    - target: /usr/share/grafana-1.5.3
-    - require:
-      - archive: grafana-tgz
-
-/usr/share/grafana/config.js:
-  file:
-    - managed
-    - source: salt://monitor/usr/share/grafana/config.js
-    - template: jinja
-    - require:
-      - file: /usr/share/grafana
-
-/etc/apache2/sites-enabled/grafana.conf:
-  file:
-    - managed
-    - contents: "alias /grafana /usr/share/grafana"
-
-apache2-grafana-svc:
-  service:
-    - running
-    - name: apache2
-    - require:
-      - service: apache2-grafana-svc-kill
-      - file: /usr/share/grafana/config.js
-      - file: /etc/apache2/sites-enabled/grafana.conf
-    - watch: 
-      - file: /etc/apache2/sites-enabled/grafana.conf
-
+      - pkg: grafana-pkg
