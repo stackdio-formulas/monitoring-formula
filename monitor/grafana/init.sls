@@ -31,15 +31,32 @@ grafana-pkg:
 
 #
 # Insert config file stuff here
-# XXXX
+# 
+/etc/grafana/grafana.ini:
+  file:
+    - managed
+    - makedirs: true
+    - user: grafana
+    - group: grafana
+    - source: salt://monitor/etc/grafana/grafana.ini
+    - template: jinja
+    - require:
+      - pkg: grafana-pkg
 
-
+#
+# Make /mnt/grafana
+# 
+/mnt/grafana:
+  - user: grafana
+  - group: grafana
+  - mode: 755
+  - makedirs: True
 
 #
 # start service
 #
 
-grafana:
+grafana-server:
   service:
     - running
     - enable: true
