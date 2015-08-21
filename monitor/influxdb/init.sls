@@ -18,7 +18,7 @@ influxdb_pkg:
     - require:
       - pkg: influxdb_pkg
 
-/mnt/influxdb/data:
+{{ storage_dir }}/data:
   file:
     - directory
     - makedirs: true
@@ -38,8 +38,7 @@ influxdb:
 influxdb_user:
   cmd:
     - run
-#    - name: '/opt/influxdb/influx -execute "CREATE USER admin WITH PASSWORD \'influx_password\' WITH ALL PRIVILEGES"'
-    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER admin WITH PASSWORD 'influx_password' WITH ALL PRIVILEGES\""
+    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
     - require:
       - service: influxdb
 
