@@ -47,10 +47,12 @@ grafana-pkg:
 # Make /mnt/grafana
 # 
 /mnt/grafana:
-  - user: grafana
-  - group: grafana
-  - mode: 755
-  - makedirs: True
+  file:
+    - directory
+    - user: grafana
+    - group: grafana
+    - mode: 755
+    - makedirs: True
 
 #
 # start service

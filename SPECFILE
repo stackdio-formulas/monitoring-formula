@@ -27,6 +27,10 @@ components:
     description: Grafana
     sls_path: monitor.grafana
 
+  - title: InfluxDB
+    description: InfluxDB timeseries DB
+    sls_path: monitor.influxdb
+
 pillar_defaults:
   monitor:
     sensu:
@@ -75,3 +79,7 @@ pillar_defaults:
       user: CHANGEME
       password: CHANGEME
       admin: false
+    influxdb:
+      username: admin
+      password: CHANGEME
+      storage_dir: /mnt/influxdb
