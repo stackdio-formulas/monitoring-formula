@@ -18,7 +18,7 @@ influxdb_pkg:
     - require:
       - pkg: influxdb_pkg
 
-{{ storage_dir }}/data:
+{{ pillar.monitoring.storage_dir }}/data:
   file:
     - directory
     - makedirs: true
