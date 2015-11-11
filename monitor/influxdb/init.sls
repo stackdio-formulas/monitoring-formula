@@ -38,7 +38,7 @@ influxdb:
 influxdb_user:
   cmd:
     - run
-    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ monitor.influxdb.username }} WITH PASSWORD '{{ monitor.influxdb.password }}' WITH ALL PRIVILEGES\""
+    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ pillar.monitor.influxdb.username }} WITH PASSWORD '{{ pillar.monitor.influxdb.password }}' WITH ALL PRIVILEGES\""
     - require:
       - service: influxdb
 
