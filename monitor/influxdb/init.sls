@@ -18,7 +18,7 @@ influxdb_pkg:
     - require:
       - pkg: influxdb_pkg
 
-{{ pillar.monitoring.storage_dir }}/data:
+{{ pillar.monitor.influxdb.storage_dir }}/data:
   file:
     - directory
     - makedirs: true
@@ -38,7 +38,7 @@ influxdb:
 influxdb_user:
   cmd:
     - run
-    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
+    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ monitor.influxdb.username }} WITH PASSWORD '{{ monitor.influxdb.password }}' WITH ALL PRIVILEGES\""
     - require:
       - service: influxdb
 
