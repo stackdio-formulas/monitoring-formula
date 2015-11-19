@@ -1,3 +1,8 @@
+{% if pillar.monitor.pagerduty.api_key %}
+   {%- set HANDLERS = '"mailer-ses"' -%}
+{% else %}
+   {%- set HANDLERS = '"mailer-ses", "pagerduty"' -%}
+{% endif %}
 {
   "checks": {
     "load_check": {
@@ -27,11 +32,7 @@
       "subscribers": [ "all" ]
     },
     "fs_checks": {
-{% if pillar.pagerduty.api_key == 'CHANGEME' %}
-      "handlers": ["mailer-ses"],
-{% else %}
-      "handlers": ["mailer-ses", "pagerduty"],
-{% endif %}
+      "handlers": [ {{ HANDLERS }} ],
       "command": "/opt/sensu/embedded/bin/check-disk-usage.rb -w 75 -c 85",
       "interval": 60,
       "subscribers": ["all"]

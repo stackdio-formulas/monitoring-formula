@@ -84,4 +84,4 @@ pillar_defaults:
       password: CHANGEME
       storage_dir: /mnt/influxdb
     pagerduty:
-      api_key: CHANGEME
+      api_key: None
