@@ -1,7 +1,7 @@
 {% if pillar.monitor.pagerduty.api_key %}
-   {%- set HANDLERS = '"mailer-ses"' -%}
-{% else %}
    {%- set HANDLERS = '"mailer-ses", "pagerduty"' -%}
+{% else %}
+   {%- set HANDLERS = '"mailer-ses"' -%}
 {% endif %}
 {
   "checks": {
