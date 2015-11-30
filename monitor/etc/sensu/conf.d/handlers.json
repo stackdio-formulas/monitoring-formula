@@ -27,7 +27,12 @@
     "delete-hosts": {
       "type": "pipe",
       "command": "/etc/sensu/handlers/delete-hosts.rb"
-    }
+    },
+    "pagerduty": {
+      "type": "pipe",
+      "command": "/etc/sensu/handlers/pagerduty.rb"
+  }
+
   },
   "mailer-ses": {
       "mail_from": "{{ pillar.monitor.aws.ses_from }}",
@@ -47,5 +52,9 @@
     "stackdio_user": "{{ pillar.monitor.stackdio.user }}",
     "stackdio_password": "{{ pillar.monitor.stackdio.password }}",
     "stackdio_admin": {{ pillar.monitor.stackdio.admin | json }}
+  },
+  "pagerduty": {
+    "api_key": "{{ pillar.monitor.pagerduty.api_key }}"
   }
-}
+
+  }
