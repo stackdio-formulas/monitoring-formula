@@ -70,11 +70,13 @@ sensu-client:
       - file: /etc/sensu/conf.d/client.json
       - file: /etc/default/sensu
 
+{% if grains['os_family'] == 'Debian' %}
 /etc/default/sensu-client:
   file:
     - managed
     - source: salt://monitor/etc/default/sensu-client
     - template: jinja
+{% endif %}
 
 {% if 'monitor.sensu.server' in grains['roles'] %}
 restart_sensu:
