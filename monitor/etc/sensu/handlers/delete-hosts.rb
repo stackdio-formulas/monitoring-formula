@@ -18,8 +18,7 @@ class Deleter < Sensu::Handler
     params = {
       :stackdio_url      => settings['delete-hosts']['stackdio_url'],
       :stackdio_user     => settings['delete-hosts']['stackdio_user'],
-      :stackdio_password => settings['delete-hosts']['stackdio_password'],
-      :stackdio_admin    => settings['delete-hosts']['stackdio_admin']
+      :stackdio_password => settings['delete-hosts']['stackdio_password']
     }
 
     host_fqdn = @event['client']['address']
@@ -30,28 +29,26 @@ class Deleter < Sensu::Handler
         http = Net::HTTP.new(uri.host, uri.port)
         http.use_ssl = (uri.scheme == "https")
 
-        if params[:stackdio_admin]
-            req = Net::HTTP::Get.new('/api/admin/stacks/')
-        else
-            req = Net::HTTP::Get.new('/api/stacks/')
-        end
+        req = Net::HTTP::Get.new('/api/stacks/')
         req['Accept'] = 'application/json'
         req.basic_auth(params[:stackdio_user], params[:stackdio_password])
 
         response = http.request(req)
 
-        stacks = JSON.parse(response.body())
+        stacks = JSON.parse(response.body(), {:symbolize_names => true})
 
         found = false
 
-        stacks['results'].each do |stack|
-            req = Net::HTTP::Get.new(stack['fqdns'])
+        stacks[:results].each do |stack|
+            req = Net::HTTP::Get.new(stack[:hosts])
             req['Accept'] = 'application/json'
             req.basic_auth(params[:stackdio_user], params[:stackdio_password])
 
             response = http.request(req)
 
-            fqdns = JSON.parse(response.body())
+            hosts = JSON.parse(response.body(), {:symbolize_names => true})[:results]
+
+            fqdns = hosts.map { |x| x[:fqdn] }
 
             # We found the host, we don't want to delete it
             if fqdns.include? host_fqdn
