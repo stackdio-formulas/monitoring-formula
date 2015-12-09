@@ -7,11 +7,15 @@ include:
   - monitor.sensu.repo
   - monitor.sensu.server.rabbitmq
   - monitor.sensu.server.redis
-  - monitor.sensu.server.landing_page
   - monitor.sensu.plugins
   - monitor.sensu.handlers
   - monitor.sensu.mutators
   - monitor.sensu.extensions
+{% if salt['pillar.get']('monitor:web:webserver') == 'apache2' %}
+  - monitor.webserver.apache2_landing_page
+{% else %}
+  - monitor.webserver.nginx_landing_page
+{% endif %}
 
 # Sensu packages both the client and server portions into the same package, but
 # we include it in both the server and client state so each one can stand on
