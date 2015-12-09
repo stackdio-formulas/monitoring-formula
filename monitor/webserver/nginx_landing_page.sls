@@ -7,21 +7,20 @@ openssl:
   pkg:
     - installed
 
-/var/www/html/errors:
-  file:
-    - recurse
-    - makedirs: true
-    - template: jinja
-    - clean: true
-    - source: salt://thorn/var/www/html/errors
-    - require:
-      - pkg: nginx
-
-/var/www/html/id:
+/usr/share/nginx/html/id:
   file:
     - managed
     - makedirs: true
     - contents: '{{ grains.id }}'
+    - require:
+      - pkg: nginx
+
+/usr/share/nginx/html:
+  file:
+    - recurse
+    - source: salt://monitor/var/www/html
+    - template: jinja
+    - makedirs: true
     - require:
       - pkg: nginx
 
@@ -31,12 +30,19 @@ openssl:
     - makedirs: true
     - template: jinja
     - clean: true
-    - source: salt://thorn/etc/nginx/sites-enabled
+    - source: salt://monitor/etc/nginx/sites-enabled
     - require:
-      - file: /var/www/html/errors
-      - file: /var/www/html/id
+      - file: /usr/share/nginx/html/id
 
-{% if pillar.thorn.web.gen_ssl %}
+/etc/nginx/sites-available:
+  file:
+    - absent
+
+/etc/nginx/sites-enabled:
+  file:
+    - absent
+
+{% if pillar.monitor.web.gen_ssl %}
 #
 # generate a self signed cert - for development use only!!
 #
@@ -45,7 +51,7 @@ generate_ssl_certs:
     - script
     - template: jinja
     - cwd: /home/{{pillar.__stackdio__.username}}/
-    - source: salt://thorn/web/generate_ssl.sh
+    - source: salt://monitor/webserver/generate_ssl.sh
     - require:
       - pkg: openssl
     - require_in:
@@ -57,8 +63,7 @@ nginx-svc:
     - running
     - name: nginx
     - watch:
-      - file: /var/www/html/errors
-      - file: /var/www/html/id
+      - file: /usr/share/nginx/html/id
       - file: /etc/nginx/conf.d/
     - require:
       - pkg: nginx
