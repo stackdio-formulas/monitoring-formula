@@ -1,4 +1,5 @@
-
+{%- set username = salt['pillar.get']('monitor:influxdb:username') -%}
+{%- set password = salt['pillar.get']('monitor:influxdb:password') -%}
 #
 # Install and configure influxDB
 #
