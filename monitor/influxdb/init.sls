@@ -36,11 +36,11 @@ influxdb:
     - require:
       - pkg: influxdb_pkg
 
-#influxdb_user:
-  #  cmd:
-    #  - run
-    #- name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ pillar.monitor.influxdb.username }} WITH PASSWORD '{{ pillar.monitor.influxdb.password }}' WITH ALL PRIVILEGES\""
-  #- require:
-    #    - service: influxdb
+influxdb_user:
+    cmd:
+      - run
+    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
+  - require:
+        - service: influxdb
 
 
