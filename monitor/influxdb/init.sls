@@ -1,4 +1,5 @@
-
+{%- set username = salt['pillar.get']('monitor:influxdb:username') -%}
+{%- set password = salt['pillar.get']('monitor:influxdb:password') -%}
 #
 # Install and configure influxDB
 #
@@ -18,7 +19,7 @@ influxdb_pkg:
     - require:
       - pkg: influxdb_pkg
 
-{{ pillar.monitoring.storage_dir }}/data:
+{{ pillar.monitor.influxdb.storage_dir }}/data:
   file:
     - directory
     - makedirs: true
