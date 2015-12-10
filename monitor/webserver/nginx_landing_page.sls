@@ -42,22 +42,6 @@ openssl:
   file:
     - absent
 
-{% if pillar.monitor.web.gen_ssl %}
-#
-# generate a self signed cert - for development use only!!
-#
-generate_ssl_certs:
-  cmd:
-    - script
-    - template: jinja
-    - cwd: /home/{{pillar.__stackdio__.username}}/
-    - source: salt://monitor/webserver/generate_ssl.sh
-    - require:
-      - pkg: openssl
-    - require_in:
-      - service: nginx-svc
-{% endif %}
-
 nginx-svc:
   service:
     - running
