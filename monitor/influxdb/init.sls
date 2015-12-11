@@ -39,8 +39,8 @@ influxdb:
 influxdb_user:
     cmd:
       - run
-    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
-  - require:
+      - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
+      - require:
         - service: influxdb
 
 
