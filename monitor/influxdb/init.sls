@@ -23,8 +23,8 @@ influxdb_pkg:
   file:
     - directory
     - makedirs: true
-    - user: root
-    - group: root
+    - user: influxdb
+    - group: influxdb
     - require:
       - pkg: influxdb_pkg
     
