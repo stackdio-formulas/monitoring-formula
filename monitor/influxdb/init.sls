@@ -8,7 +8,7 @@
 influxdb_pkg:
   pkg.installed:
     - sources:
-      - influxdb: http://influxdb.s3.amazonaws.com/influxdb_0.9.2_amd64.deb
+      - influxdb: http://influxdb.s3.amazonaws.com/influxdb_0.9.4.2_amd64.deb
 
 /etc/opt/influxdb/influxdb.conf:
   file:
@@ -23,8 +23,8 @@ influxdb_pkg:
   file:
     - directory
     - makedirs: true
-    - user: root
-    - group: root
+    - user: influxdb
+    - group: influxdb
     - require:
       - pkg: influxdb_pkg
     
@@ -37,10 +37,10 @@ influxdb:
       - pkg: influxdb_pkg
 
 influxdb_user:
-  cmd:
-    - run
-    - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
-    - require:
-      - service: influxdb
+    cmd:
+      - run
+      - name: "/bin/sleep 5 ;/opt/influxdb/influx -execute \"CREATE USER {{ username }} WITH PASSWORD '{{ password }}' WITH ALL PRIVILEGES\""
+      - require:
+        - service: influxdb
 
 
