@@ -72,6 +72,7 @@ pillar_defaults:
     aws:
       access_key: CHANGEME
       secret_key: CHANGEME
+      region: us-west-2
       ses_from: CHANGEME
       ses_to: CHANGEME
       ses_endpoint: email.us-west-2.amazonaws.com

@@ -43,6 +43,19 @@ grafana-pkg:
     - require:
       - pkg: grafana-pkg
 
+# .aws file for cloudwatch dashboards
+#
+/usr/share/grafana/.aws/credentials:
+  file:
+    - managed
+    - makedirs: true
+    - user: grafana
+    - group: grafana
+    - source: salt://monitor/etc/grafana/aws_config
+    - template: jinja
+    - require:
+      - pkg: grafana-pkg
+
 #
 # Make /mnt/grafana
 # 
