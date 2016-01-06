@@ -1,4 +1,4 @@
 [default]
-aws.access_key_id={{pillar.monitor.aws.access_key}}
-aws.secret_access_key={{pillar.monitor.aws.secret_key}}
+aws_access_key_id={{pillar.monitor.aws.access_key}}
+aws_secret_access_key={{pillar.monitor.aws.secret_key}}
 region={{pillar.monitor.aws.region}}
