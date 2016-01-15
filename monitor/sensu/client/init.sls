@@ -5,6 +5,7 @@
 
 include:
   - monitor.sensu.repo
+  - monitor.sensu.plugins
 
 # Sensu packages both the client and server portions into the same package, but
 # we include it in both the server and client state so each one can stand on

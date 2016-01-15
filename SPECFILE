@@ -15,10 +15,6 @@ components:
     description: Sensu client
     sls_path: monitor.sensu.client
 
-  - title: Sensu Plugins
-    description: Sensu plugins
-    sls_path: monitor.sensu.plugins
-
   - title: Graphite
     description: Graphite
     sls_path: monitor.graphite

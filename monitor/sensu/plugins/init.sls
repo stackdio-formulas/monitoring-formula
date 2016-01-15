@@ -16,6 +16,8 @@
     - recurse: true
     - source: salt://monitor/etc/sensu/plugins
     - template: jinja
+    - require:
+      - pkg: sensu-client-pkg
 
 gem-pkgs:
   pkg:
@@ -44,4 +46,8 @@ gem-pkgs:
     - require:
         - file: /etc/sensu/plugins
         - pkg: gem-pkgs
+        - pkg: sensu-client-pkg
+        - file: /etc/default/sensu
+    - require_in:
+        - service: sensu-client
 {% endfor %}
