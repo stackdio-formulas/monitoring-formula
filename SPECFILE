@@ -78,7 +78,6 @@ pillar_defaults:
       url: CHANGEME
       user: CHANGEME
       password: CHANGEME
-      admin: false
     influxdb:
       username: admin
       password: CHANGEME
