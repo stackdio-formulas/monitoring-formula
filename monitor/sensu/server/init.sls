@@ -25,8 +25,6 @@ sensu-server-pkg:
     - name: sensu
     - require:
       - pkgrepo: sensu-repo
-    - require_in:
-      - file: /etc/sensu/plugins
 
 {% if salt['pillar.get']('monitor:sensu:check_system') %}
 /etc/sensu/conf.d/check_system.json:
@@ -74,7 +72,6 @@ sensu-server:
     - running
     - enable: true
     - require:
-      - file: /etc/sensu/plugins
       - file: /etc/sensu/ssl/cert.pem
       - file: /etc/sensu/ssl/key.pem
       - file: /etc/sensu/conf.d/config.json
