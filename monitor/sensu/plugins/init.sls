@@ -50,4 +50,6 @@ gem-pkgs:
         - pkg: gem-pkgs
         - pkg: sensu-client-pkg
         - file: /etc/default/sensu
+    - require_in:
+        - service: sensu-client
 {% endfor %}

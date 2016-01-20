@@ -7,7 +7,6 @@ include:
   - monitor.sensu.repo
   - monitor.sensu.server.rabbitmq
   - monitor.sensu.server.redis
-  - monitor.sensu.plugins
   - monitor.sensu.handlers
   - monitor.sensu.mutators
   - monitor.sensu.extensions
