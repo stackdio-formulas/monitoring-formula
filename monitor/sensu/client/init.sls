@@ -70,6 +70,9 @@ sensu-client:
       - file: /etc/sensu/conf.d/rabbitmq.json
       - file: /etc/sensu/conf.d/client.json
       - file: /etc/default/sensu
+      {% for gem in gems %}
+      - cmd: {{gem}}-gem
+      {% endfor %}
 
 {% if grains['os_family'] == 'Debian' %}
 /etc/default/sensu-client:

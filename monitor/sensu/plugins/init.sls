@@ -6,6 +6,8 @@
 # or write your own based on http://sensuapp.org/docs/latest/checks
 #
 
+{% set gems = ['aws-sdk-v1', 'sensu-plugins-disk-checks', 'sys-filesystem', 'sensu-plugins-influxdb', 'redphone', 'sensu-plugins-redis'] %}
+
 /etc/sensu/plugins:
   file:
     - recurse
@@ -34,7 +36,7 @@ gem-pkgs:
 # The following is a list of dependencies for any of the handlers. Because
 # we're using the embedded ruby included with Sensu, we need to use cmd.run to
 # manipulate the GEM_PATH (vs the more salty gem.installed).
-{% for gem in [ 'aws-sdk-v1', 'sensu-plugins-disk-checks', 'sys-filesystem', 'sensu-plugins-influxdb', 'redphone', 'sensu-plugins-redis', ] %}
+{% for gem in gems %}
 {{gem}}-gem:
   cmd.run:
     - name: /opt/sensu/embedded/bin/gem install {{gem}}
@@ -48,6 +50,4 @@ gem-pkgs:
         - pkg: gem-pkgs
         - pkg: sensu-client-pkg
         - file: /etc/default/sensu
-    - require_in:
-        - service: sensu-client
 {% endfor %}
