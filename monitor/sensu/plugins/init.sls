@@ -6,7 +6,7 @@
 # or write your own based on http://sensuapp.org/docs/latest/checks
 #
 
-{% set gems = ['aws-sdk-v1', 'sensu-plugins-disk-checks', 'sys-filesystem', 'sensu-plugins-influxdb', 'redphone', 'sensu-plugins-redis', 'sensu-plugins-elasticsearch'] %}
+{% set gems = ['aws-sdk-v1', 'sensu-plugins-disk-checks', 'sys-filesystem', 'sensu-plugins-influxdb', 'redphone', 'sensu-plugins-redis'] %}
 
 /etc/sensu/plugins:
   file:
