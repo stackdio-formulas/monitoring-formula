@@ -26,7 +26,7 @@ gem-pkgs:
 {% for plugin in plugin_list %}
 {{plugin}}-install:
   cmd.run:
-    - name: usr/bin/sensu-install -p {{plugin}}
+    - name: /usr/bin/sensu-install -p {{plugin}}
     - require:
         - pkg: gem-pkgs
         - pkg: sensu-client-pkg
