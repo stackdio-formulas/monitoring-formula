@@ -6,9 +6,9 @@
 # or write your own based on http://sensuapp.org/docs/latest/checks
 #
 
-{% set plugin_list = ['process-checks', 'disk-checks', 'plugins-aws', 'filesystem-checks', 
+{% set plugin_list = [ 'disk-checks', 'plugins-aws', 'filesystem-checks', 
   'redis', 'influxdb', 'slack', 'pagerduty', 'graphite', 'http', 'logs', 'process-checks', 
-  'nginx', 'vmstats'    ] %}
+  'nginx', 'vmstats' ] %}
 
 gem-pkgs:
   pkg:
