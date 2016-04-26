@@ -2,13 +2,13 @@
 #
 # This state should be run on all hosts.
 #
-# You can get more plugins from https://github.com/sensu/sensu-community-plugins/tree/master/plugins 
+# You can get more plugins from https://github.com/sensu-plugins
 # or write your own based on http://sensuapp.org/docs/latest/checks
 #
 
 {% set plugin_list = [ 'disk-checks', 'aws', 'filesystem-checks', 'load-checks', 
   'redis', 'influxdb', 'slack', 'pagerduty', 'graphite', 'http', 'logs', 'process-checks', 
-  'nginx', 'vmstats' ] %}
+  'nginx', 'vmstats', 'supervisor' ] %}
 
 gem-pkgs:
   pkg:
