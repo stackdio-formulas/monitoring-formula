@@ -1,14 +1,21 @@
 {%- set username = salt['pillar.get']('monitor:influxdb:username') -%}
 {%- set password = salt['pillar.get']('monitor:influxdb:password') -%}
+{%- set influx_ver = salt['pillar.get']('monitor:influxdb:version') -%}
 #
 # Install and configure influxDB
 #
 
-
+{% if grains["os_family"] == "Debian" %}
 influxdb_pkg:
   pkg.installed:
     - sources:
-      - influxdb: http://influxdb.s3.amazonaws.com/influxdb_0.9.4.2_amd64.deb
+      - influxdb: http://influxdb.s3.amazonaws.com/influxdb_{{influx_ver}}_amd64.deb
+{% elif grains["os_family"] == "RedHat" %}
+influxdb_pkg:
+  pkg.installed:
+    - sources:
+      - influxdb: http://influxdb.s3.amazonaws.com/influxdb_{{influx_ver}}.x86_64.rpm
+{% endif %}
 
 /etc/opt/influxdb/influxdb.conf:
   file:
