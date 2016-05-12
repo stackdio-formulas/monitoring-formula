@@ -8,7 +8,7 @@
 
 {% set plugin_list = [ 'disk-checks', 'aws', 'filesystem-checks', 'load-checks', 
   'redis', 'influxdb', 'slack', 'pagerduty', 'graphite', 'http', 'logs', 'process-checks', 
-  'nginx', 'vmstats', 'supervisor' ] %}
+  'nginx', 'vmstats', 'supervisor', 'memory-checks', 'sensu' ] %}
 
 gem-pkgs:
   pkg:

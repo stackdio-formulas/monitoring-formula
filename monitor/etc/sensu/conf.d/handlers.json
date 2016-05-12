@@ -10,15 +10,15 @@
     },
     "mailer-ses": {
       "type": "pipe",
-      "command": "/etc/sensu/handlers/mailer-ses.rb"
+      "command": "/opt/sensu/embedded/bin/handler-ses.rb"
     },
     "sns": {
       "type": "pipe",
-      "command": "/etc/sensu/handlers/sns.rb"
+      "command": "/opt/sensu/embedded/bin/handler-sns.rb"
     },
     "remediator": {
       "type": "pipe",
-      "command": "/etc/sensu/handlers/remediator.rb"
+      "command": "/opt/sensu/embedded/bin/handler-sensu.rb"
     },
     "file-handler": {
       "type": "pipe",
@@ -30,7 +30,7 @@
     },
     "pagerduty": {
       "type": "pipe",
-      "command": "/etc/sensu/handlers/pagerduty.rb"
+      "command": "/opt/sensu/embedded/bin/handler-pagerduty.rb"
   }
 
   },
