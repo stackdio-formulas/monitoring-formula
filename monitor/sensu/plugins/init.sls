@@ -16,11 +16,12 @@ gem-pkgs:
     - pkgs:
       - gcc
       - patch
-      - libxml2
 {% if grains["os_family"] == "RedHat" %}
       - zlib-devel
+      - libxml2-devel
 {% elif grains["os_family"] == "Debian" %}
       - zlib1g-dev
+      - libxml2-dev
 {% endif %}
 
 
