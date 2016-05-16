@@ -18,3 +18,5 @@ service sensu-api restart
 echo "## Restart client"
 service sensu-client restart
 
+echo "## Restart uchiwa"
+service uchiwa restart
