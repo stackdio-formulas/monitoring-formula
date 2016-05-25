@@ -19,9 +19,11 @@ gem-pkgs:
 {% if grains["os_family"] == "RedHat" %}
       - zlib-devel
       - libxml2-devel
+      - gcc-c++
 {% elif grains["os_family"] == "Debian" %}
       - zlib1g-dev
       - libxml2-dev
+      - g++
 {% endif %}
 
 
