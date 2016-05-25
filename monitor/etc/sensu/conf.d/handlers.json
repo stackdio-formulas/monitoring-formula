@@ -1,4 +1,11 @@
 {
+  "influxdb": {
+      "username": "admin",
+      "password": "influxdb_password1",
+      "database": "sensu",
+      "host": "localhost",
+      "port": 8086
+  },
   "handlers": {
     "graphite-tcp": {
       "type": "tcp",
@@ -7,6 +14,10 @@
           "host": "localhost",
           "port": 2003
       }
+    },
+    "influx-tcp": {
+      "type": "pipe",
+      "command": "/opt/sensu/embedded/bin/metrics-influxdb.rb"
     },
     "mailer-ses": {
       "type": "pipe",
