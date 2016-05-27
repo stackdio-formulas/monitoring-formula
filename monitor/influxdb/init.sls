@@ -17,7 +17,7 @@ influxdb_pkg:
       - influxdb: http://influxdb.s3.amazonaws.com/influxdb_{{influx_ver}}.x86_64.rpm
 {% endif %}
 
-/etc/opt/influxdb/influxdb.conf:
+/etc/influxdb/influxdb.conf:
   file:
     - managed
     - source: salt://monitor/etc/influxdb/influxdb.conf
