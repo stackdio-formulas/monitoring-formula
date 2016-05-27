@@ -1,7 +1,7 @@
 {
   "influxdb": {
-      "username": "admin",
-      "password": "influxdb_password1",
+      "username": "{{ pillar.monitor.influxdb.user }} ",
+      "password": "{{ pillar.monitor.influxdb.password }}",
       "database": "sensu",
       "host": "localhost",
       "port": 8086
