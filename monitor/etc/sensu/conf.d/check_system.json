@@ -13,7 +13,7 @@
     },
     "mem_check": {
       "handlers": ["default"],
-      "command": "/opt/sensu/embedded/bin/check-memory.rb",
+      "command": "/opt/sensu/embedded/bin/check-memory.rb -w 1000 -c 500",
       "interval": 60,
       "subscribers": [ "all" ]
     },
