@@ -38,7 +38,7 @@ influxdb:
     - require:
       - pkg: influxdb_pkg
 
-infulx_user:
+influx_user:
   cmd:
     - run
     - name: /usr/bin/influx -execute "CREATE USER {{username}} WITH PASSWORD '{{password}}' WITH ALL PRIVILEGES"
