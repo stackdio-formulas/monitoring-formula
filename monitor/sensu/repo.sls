@@ -12,7 +12,7 @@ sensu-repo:
     - refresh_db: true
 {% elif grains["os_family"] == "RedHat" %}
     - humanname: sensu
-    - name: sensu
+    - name: sensu-repo
     - baseurl: http://repositories.sensuapp.org/yum/$basearch/
     - gpgcheck: 0
     - enabled: 1
