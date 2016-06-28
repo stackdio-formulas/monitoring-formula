@@ -33,6 +33,7 @@ pillar_defaults:
       webserver: nginx
       gen_ssl: null
     sensu:
+      version: 1:0.25.3
       ssl:
         server_cacert: CHANGEME
         server_cert: CHANGEME

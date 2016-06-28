@@ -1,4 +1,4 @@
-
+{%- set sensu_version = pillar.monitor.sensu.version -%}
 #
 # This installs the Sensu client and all of it's dependencies.
 #
@@ -14,6 +14,7 @@ sensu-client-pkg:
   pkg:
     - installed
     - name: sensu
+    - version: {{ sensu_version }}-1
     - require:
       - pkgrepo: sensu-repo
 
