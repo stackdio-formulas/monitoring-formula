@@ -17,6 +17,7 @@ sensu-client-pkg:
     - version: {{ sensu_version }}-1
     - allow_updates: true
     - normalize: false
+    - pkg_verify: true
     - require:
       - pkgrepo: sensu-repo
 
