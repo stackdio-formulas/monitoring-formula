@@ -2,24 +2,13 @@
 #
 # This state should be run on all hosts.
 #
-# You can get more plugins from https://github.com/sensu/sensu-community-plugins/tree/master/plugins 
+# You can get more plugins from https://github.com/sensu-plugins
 # or write your own based on http://sensuapp.org/docs/latest/checks
 #
 
-{% set gems = ['aws-sdk-v1', 'sensu-plugins-disk-checks', 'sys-filesystem', 'sensu-plugins-influxdb', 'redphone', 'sensu-plugins-redis'] %}
-
-/etc/sensu/plugins:
-  file:
-    - recurse
-    - makedirs: true
-    - clean: true
-    - file_mode: 755
-    - dir_mode: 755
-    - recurse: true
-    - source: salt://monitor/etc/sensu/plugins
-    - template: jinja
-    - require:
-      - pkg: sensu-client-pkg
+{% set plugin_list = [ 'disk-checks', 'aws', 'filesystem-checks', 'load-checks', 
+  'redis', 'influxdb', 'slack', 'pagerduty', 'graphite', 'http', 'logs', 'process-checks', 
+  'nginx', 'vmstats', 'supervisor', 'memory-checks', 'sensu' ] %}
 
 gem-pkgs:
   pkg:
@@ -29,24 +18,20 @@ gem-pkgs:
       - patch
 {% if grains["os_family"] == "RedHat" %}
       - zlib-devel
+      - libxml2-devel
+      - gcc-c++
 {% elif grains["os_family"] == "Debian" %}
       - zlib1g-dev
+      - libxml2-dev
+      - g++
 {% endif %}
 
-# The following is a list of dependencies for any of the handlers. Because
-# we're using the embedded ruby included with Sensu, we need to use cmd.run to
-# manipulate the GEM_PATH (vs the more salty gem.installed).
-{% for gem in gems %}
-{{gem}}-gem:
+
+{% for plugin in plugin_list %}
+{{plugin}}-install:
   cmd.run:
-    - name: /opt/sensu/embedded/bin/gem install {{gem}}
-    - unless: /opt/sensu/embedded/bin/gem list --local | grep {{gem}}
-    - env:
-        - PLUGINS_DIR: /etc/sensu/plugins
-        - HANDLERS_DIR: /etc/sensu/handlers
-        - GEM_PATH: /opt/sensu/embedded/lib/ruby/gems/2.0.0
+    - name: /usr/bin/sensu-install -p {{plugin}}
     - require:
-        - file: /etc/sensu/plugins
         - pkg: gem-pkgs
         - pkg: sensu-client-pkg
         - file: /etc/default/sensu

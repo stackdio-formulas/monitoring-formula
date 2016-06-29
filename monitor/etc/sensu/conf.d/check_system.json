@@ -7,27 +7,27 @@
   "checks": {
     "load_check": {
       "handlers": ["default"],
-      "command": "/etc/sensu/plugins/check-load.rb",
+      "command": "/opt/sensu/embedded/bin/check-load.rb",
       "interval": 60,
       "subscribers": [ "all" ]
     },
     "mem_check": {
       "handlers": ["default"],
-      "command": "/etc/sensu/plugins/check-mem.sh",
+      "command": "/opt/sensu/embedded/bin/check-memory.rb -w 1000 -c 500",
       "interval": 60,
       "subscribers": [ "all" ]
     },
     "disk_metrics": {
       "handlers": ["graphite-tcp"],
       "type": "metric",
-      "command": "/etc/sensu/plugins/disk-usage-metrics.rb --scheme sensu.:::name:::",
+      "command": "/opt/sensu/embedded/bin/metrics-disk-usage.rb --scheme sensu.:::name:::",
       "interval": 60,
       "subscribers": [ "all" ]
     },
     "vmstat_metrics": {
       "handlers": ["graphite-tcp" ],
       "type": "metric",
-      "command": "/etc/sensu/plugins/vmstat-metrics.rb --scheme sensu.:::name:::",
+      "command": "/opt/sensu/embedded/bin/metrics-vmstat.rb  --scheme sensu.:::name:::",
       "interval": 60,
       "subscribers": [ "all" ]
     },
