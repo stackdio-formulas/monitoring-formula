@@ -27,8 +27,14 @@ components:
     description: InfluxDB timeseries DB
     sls_path: monitor.influxdb
 
+ -  title: Beats
+    description: Elasticsearch Beats for monitoring
+    sls_path: monitor.beats
+
 pillar_defaults:
   monitor:
+    es:
+      host: localhost
     web: 
       webserver: nginx
       gen_ssl: null
