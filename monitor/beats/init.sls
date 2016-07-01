@@ -1,4 +1,4 @@
-{%- es_host = salt['pillar.get']('monitor:es:host') -%}
+{%- es_host = salt['pillar.get']('monitor:beats:es_host') -%}
 # repo topbeat
 beat-repo:
   pkgrepo:
@@ -71,10 +71,7 @@ topbeats_service:
       - cmd: kibana_templates_load
 #
 # 
-# IF WEBSERVER
-#
-#
-#
+{% if pillar.monitor.beats.monitor_webserver %}
 
 # place nginx beat 
 nginxbeat_bin:
@@ -122,3 +119,5 @@ nginxbeat_service:
     - require:
       - file: nginxbeat_bin
       - cmd: topbeats_template
+
+{% endif %}

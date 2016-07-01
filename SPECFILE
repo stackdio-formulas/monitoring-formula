@@ -33,8 +33,9 @@ components:
 
 pillar_defaults:
   monitor:
-    es:
-      host: localhost
+    beats:
+      monitor_webserver: false
+      es_host: localhost
     web: 
       webserver: nginx
       gen_ssl: null
