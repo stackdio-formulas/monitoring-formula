@@ -39,9 +39,10 @@ topbeats_template:
   cmd:
     - run
     - name: "curl -XPUT 'http://{{es_host}}:9200/_template/topbeat' -d@/etc/topbeat/topbeat.template.json"
+    - unless: curl -f 'http://{{es_host}}:9200/_template/topbeat'
 
 # load kib templates into ES
-
+{% if pillar.monitor.beats.install_templates %}
 kibana_templats_get:
   cmd:
     - run
@@ -60,6 +61,8 @@ kibana_templates_load:
     - run
     - name: ./load.sh -url http://{{ es_host }}:9200
     - cwd: /tmp/beats-dashboards-1.2.3
+
+{% endif %}
 #
 # start topbeat
 topbeats_service:
@@ -68,7 +71,7 @@ topbeats_service:
     - name: topbeats
     - enabled: true
     - require:
-      - cmd: kibana_templates_load
+      - cmd: topbeats_template
 #
 # 
 {% if pillar.monitor.beats.monitor_webserver %}
@@ -107,6 +110,7 @@ topbeats_template:
   cmd:
     - run
     - name: "curl -XPUT 'http://{{es_host}}:9200/_template/nginxbeat' -d@/tmp/nginxbeat.template.json"
+    - unless: curl -f 'http://{{es_host}}:9200/_template/nginxbeat'
     - require:
       - file: nginxbeat_template_get
 

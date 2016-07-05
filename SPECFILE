@@ -36,6 +36,7 @@ pillar_defaults:
     beats:
       monitor_webserver: false
       es_host: localhost
+      install_templates: false
     web: 
       webserver: nginx
       gen_ssl: null
