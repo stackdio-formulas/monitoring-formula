@@ -27,7 +27,7 @@ components:
     description: InfluxDB timeseries DB
     sls_path: monitor.influxdb
 
- -  title: Beats
+  - title: Beats
     description: Elasticsearch Beats for monitoring
     sls_path: monitor.beats
 
