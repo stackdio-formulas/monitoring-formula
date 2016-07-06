@@ -1,4 +1,4 @@
-{%- es_host = salt['pillar.get']('monitor:beats:es_host') -%}
+{%- set es_host = salt['pillar.get']('monitor:beats:es_host') -%}
 ################### Topbeat Configuration Example #########################
 
 ############################# Input ############################################

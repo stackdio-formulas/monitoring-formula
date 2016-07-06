@@ -69,7 +69,7 @@ topbeats_service:
   service:
     - running
     - name: topbeats
-    - enabled: true
+    - enable: true
     - require:
       - cmd: topbeats_template
 #
@@ -119,7 +119,7 @@ nginxbeat_service:
   service:
     - running
     - name: nginxbeat
-    - enabled: true
+    - enable: true
     - require:
       - file: nginxbeat_bin
       - cmd: nginxbeat_template
