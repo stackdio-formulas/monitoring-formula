@@ -106,7 +106,7 @@ nginxbeat_template_get:
     - name: /tmp/nginxbeat.template.json
     - source: salt://monitor/etc/beats/nginxbeat/nginxbeat.template.json
 
-topbeats_template:
+nginxbeat_template:
   cmd:
     - run
     - name: "curl -XPUT 'http://{{es_host}}:9200/_template/nginxbeat' -d@/tmp/nginxbeat.template.json"
@@ -122,6 +122,6 @@ nginxbeat_service:
     - enabled: true
     - require:
       - file: nginxbeat_bin
-      - cmd: topbeats_template
+      - cmd: nginxbeat_template
 
 {% endif %}
