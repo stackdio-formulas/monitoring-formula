@@ -68,7 +68,7 @@ kibana_templates_load:
 topbeats_service:
   service:
     - running
-    - name: topbeats
+    - name: topbeat
     - enable: true
     - require:
       - cmd: topbeats_template
@@ -98,6 +98,7 @@ nginxbeat_init:
     - managed
     - name: /etc/init.d/nginxbeat
     - source: salt://monitor/etc/beats/nginxbeat/nginxbeat.init
+    - mode: 755
 
 # load templat into ES
 nginxbeat_template_get:
