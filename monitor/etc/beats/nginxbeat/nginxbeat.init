@@ -23,7 +23,7 @@ export PATH
 
 [ -f /etc/sysconfig/nginxbeat ] && . /etc/sysconfig/nginxbeat
 pidfile=${PIDFILE-/var/run/nginxbeat.pid}
-agent=${PB_AGENT-/usr/bin/nginxbeat}
+agent=${PB_AGENT-/opt/nginxbeat/nginxbeat}
 args="-c /etc/nginxbeat/nginxbeat.yml"
 test_args="-e -configtest"
 wrapper="nginxbeat-god"

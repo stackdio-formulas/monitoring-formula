@@ -83,6 +83,7 @@ nginxbeat_bin:
     - name: /opt/nginxbeat/nginxbeat
     - source: salt://monitor/etc/beats/nginxbeat/nginxbeat
     - makedirs: true
+    - mode: 755
 
 # place cfg
 nginxbeat_cfg:
@@ -90,6 +91,7 @@ nginxbeat_cfg:
     - managed
     - name: /etc/nginxbeat/nginxbeat.yml
     - source: salt://monitor/etc/beats/nginxbeat/nginxbeat.yml
+    - template: jinja
     - makedirs: true
 
 # place start script
