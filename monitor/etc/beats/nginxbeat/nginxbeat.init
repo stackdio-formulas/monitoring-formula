@@ -33,6 +33,7 @@ stop() {
 	killproc $APP
             RETVAL=$?
 	[ $RETVAL = 0 ] && rm -f /var/lock/subsys/nginxbeat
+	echo
      else
         echo "No process found"
         echo
@@ -47,6 +48,15 @@ case "$1" in
 	;;
     stop)
 	stop
+	;;
+    status)
+        if [ -f $LOCK ]; then
+		echo "Lock file exists"
+		status nginxbeat
+	else
+		echo "No lock file found"
+		status nginxbeat
+	fi
 	;;
     restart)
     	stop
