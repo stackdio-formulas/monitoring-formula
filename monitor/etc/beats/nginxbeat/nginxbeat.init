@@ -1,8 +1,20 @@
 #!/bin/bash
 #
-#	/etc/rc.d/init.d/nginxbeat
-#  Start and stop the nginxbeat monitor
+# nginxbeat      nginxbeat shipper
+#  
+# chkconfig: 2345 98 02
 #
+
+## BEGIN INIT INFO
+# Provides:          nginxbeat
+# Required-Start:    $local_fs $network $syslog
+# Required-Stop:     $local_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: beat to ship nginx stats to ES
+# Description:       nginxbeat is a shipper that uses  Elastic Beats framework
+#					  Please see: https://www.elastic.co/products/beats
+### END INIT INFO
 
 # Source function library.
 . /etc/init.d/functions
