@@ -37,7 +37,7 @@ pillar_defaults:
       monitor_webserver: false
       es_host: localhost
       install_templates: false
-      beats-dashboards: 1.2.3
+      beats_dashboards: 1.2.3
     web: 
       webserver: nginx
       gen_ssl: null

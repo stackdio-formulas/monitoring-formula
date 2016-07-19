@@ -1,5 +1,5 @@
 {%- set es_host = salt['pillar.get']('monitor:beats:es_host') -%}
-{%- set beats-dashboards = salt['pillar.get']('monitor:beats:beats-dashboards') -%}
+{%- set beats_dashboards = salt['pillar.get']('monitor:beats:beats_dashboards') -%}
 # repo topbeat
 beat-repo:
   pkgrepo:
@@ -47,21 +47,21 @@ topbeats_template:
 kibana_templates_get:
   cmd:
     - run
-    - name: 'wget -c http://download.elastic.co/beats/dashboards/beats-dashboards-{{beats-dashboards}}.zip -O /tmp/beats-dashboards-{{beats-dashboards}}.zip'
-    - unless: test -f /tmp/beats-dashboards-{{beats-dashboards}}.zip
+    - name: 'wget -c http://download.elastic.co/beats/dashboards/beats-dashboards-{{beats_dashboards}}.zip -O /tmp/beats-dashboards-{{beats_dashboards}}.zip'
+    - unless: test -f /tmp/beats-dashboards-{{beats_dashboards}}.zip
 
 kibana_templates_unzip:
   cmd:
     - run
-    - name: unzip /tmp/beats-dashboards-{{beats-dashboards}}.zip
+    - name: unzip /tmp/beats-dashboards-{{beats_dashboards}}.zip
     - cwd: /tmp/
-    - unless: test -d /tmp/beats-dashboards-{{beats-dashboards}}
+    - unless: test -d /tmp/beats-dashboards-{{beats_dashboards}}
 
 kibana_templates_load:
   cmd:
     - run
     - name: ./load.sh -url http://{{ es_host }}:9200
-    - cwd: /tmp/beats-dashboards-{{beats-dashboards}}
+    - cwd: /tmp/beats-dashboards-{{beats_dashboards}}
 
 {% endif %}
 #
