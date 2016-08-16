@@ -31,6 +31,14 @@ components:
     description: Elasticsearch Beats for monitoring
     sls_path: monitor.beats
 
+  - title: Logstash 
+    description: Logstash for listening and writing to ES
+    sls_path: monitor.logstash
+
+  - title: Filebeat
+    description: beat to send logs to logstash or ES
+    sls_path: monitor.beats.filebeat
+
 pillar_defaults:
   monitor:
     beats:
