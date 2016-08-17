@@ -103,3 +103,5 @@ pillar_defaults:
       version: 0.12.2-1
     pagerduty:
       api_key: null
+    logstash:
+      version: 2.3
