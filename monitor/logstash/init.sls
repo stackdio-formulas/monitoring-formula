@@ -1,4 +1,4 @@
-{%- set version = pillar.logstash.version -%}
+{%- set version = pillar.monitor.logstash.version -%}
 # repo logstash
 logstash-repo:
   pkgrepo:
