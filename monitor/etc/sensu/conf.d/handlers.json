@@ -1,6 +1,6 @@
 {
   "influxdb": {
-      "username": "{{ pillar.monitor.influxdb.user }} ",
+      "username": "{{ pillar.monitor.influxdb.username }} ",
       "password": "{{ pillar.monitor.influxdb.password }}",
       "database": "sensu",
       "host": "localhost",
