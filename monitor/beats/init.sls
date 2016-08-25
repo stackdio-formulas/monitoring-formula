@@ -129,3 +129,51 @@ nginxbeat_service:
       - cmd: nginxbeat_template
 
 {% endif %}
+
+{% if pillar.monitor.beats.monitor_es_server %}
+nginxbeat_bin:
+  file:
+    - managed
+    - name: /opt/elasticbeat/elasticbeat
+    - source: salt://monitor/etc/beats/elasticbeat/elasticbeat
+    - makedirs: true
+    - mode: 755
+
+elasticbeat_cfg:
+  file:
+    - managed
+    - name: /etc/elasticbeat/elasticbeat.yml
+    - source: salt://monitor/etc/beats/elasticbeat/elasticbeat.yml
+    - template: jinja
+    - makedirs: true
+    
+elasticbeat_template_get:
+  file:
+    - managed
+    - name: /tmp/elasticbeat.template.json
+    - source: salt://monitor/etc/beats/elasticbeat/elasticbeat.template.json
+
+elasticbeat_template:
+  cmd:
+    - run
+    - name: "curl -XPUT 'http://{{es_host}}:9200/_template/elasticbeat' -d@/tmp/elasticbeat.template.json"
+    - unless: curl -f 'http://{{es_host}}:9200/_template/elasticbeat'
+    - require:
+      - file: elasticbeat_template_get
+
+elasticbeat_init:
+  file:
+    - managed
+    - name: /etc/init.d/elasticbeat
+    - source: salt://monitor/etc/beats/elasticbeat/elasticbeat.init
+    - mode: 755
+
+elasticbeat_service:
+  service:
+    - running
+    - name: elasticbeat
+    - enable: true
+    - require:
+      - file: elasticbeat_bin
+      - cmd: elasticbeat_template
+{% endif %}
