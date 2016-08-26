@@ -44,6 +44,7 @@ pillar_defaults:
     beats:
       monitor_webserver: false
       monitor_es_server: false
+      es_host_to_monitor: localhost
       es_host: localhost
       install_templates: false
       beats_dashboards: 1.2.3
