@@ -14,7 +14,6 @@ sensu-client-pkg:
   pkg:
     - installed
     - name: sensu
-    - version: {{ sensu_version }}-1
     - require:
       - pkgrepo: sensu-repo
 
