@@ -35,6 +35,7 @@ topbeat-pkg:
     - require:
       - pkg: topbeat-pkg
 
+{% if pillar.monitor.beats.install_templates %}
 # load templats into ES
 topbeats_template:
   cmd:
@@ -43,7 +44,6 @@ topbeats_template:
     - unless: curl -f 'http://{{es_host}}:9200/_template/topbeat'
 
 # load kib templates into ES
-{% if pillar.monitor.beats.install_templates %}
 kibana_templates_get:
   cmd:
     - run
@@ -131,7 +131,7 @@ nginxbeat_service:
 {% endif %}
 
 {% if pillar.monitor.beats.monitor_es_server %}
-nginxbeat_bin:
+elasticbeat_bin:
   file:
     - managed
     - name: /opt/elasticbeat/elasticbeat
