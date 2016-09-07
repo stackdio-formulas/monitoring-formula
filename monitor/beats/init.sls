@@ -149,13 +149,13 @@ elasticbeat_cfg:
     - template: jinja
     - makedirs: true
     
-{% if pillar.monitor.beats.install_templates %}
 elasticbeat_template_get:
   file:
     - managed
-    - name: /tmp/elasticbeat.template.json
+    - name: /opt/elasticbeat/elasticbeat.template.json
     - source: salt://monitor/etc/beats/elasticbeat/elasticbeat.template.json
 
+{% if pillar.monitor.beats.install_templates %}
 elasticbeat_template:
   cmd:
     - run
