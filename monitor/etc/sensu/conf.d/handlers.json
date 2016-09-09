@@ -21,7 +21,7 @@
     },
     "mailer-ses": {
       "type": "pipe",
-      "command": "/opt/sensu/embedded/bin/handler-ses.rb"
+      "command": "/etc/sensu/handlers/handler-ses.rb"
     },
     "sns": {
       "type": "pipe",
