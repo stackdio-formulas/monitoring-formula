@@ -35,6 +35,7 @@ topbeat-pkg:
     - require:
       - pkg: topbeat-pkg
 
+{% if pillar.monitor.beats.install_templates %}
 # load templats into ES
 topbeats_template:
   cmd:
@@ -43,7 +44,6 @@ topbeats_template:
     - unless: curl -f 'http://{{es_host}}:9200/_template/topbeat'
 
 # load kib templates into ES
-{% if pillar.monitor.beats.install_templates %}
 kibana_templates_get:
   cmd:
     - run
@@ -72,7 +72,7 @@ topbeats_service:
     - name: topbeat
     - enable: true
     - require:
-      - cmd: topbeats_template
+      - file: /etc/topbeat/topbeat.yml
 #
 # 
 {% if pillar.monitor.beats.monitor_webserver %}
@@ -103,6 +103,7 @@ nginxbeat_init:
     - source: salt://monitor/etc/beats/nginxbeat/nginxbeat.init
     - mode: 755
 
+{% if pillar.monitor.beats.install_templates %}
 # load templat into ES
 nginxbeat_template_get:
   file:
@@ -118,6 +119,7 @@ nginxbeat_template:
     - require:
       - file: nginxbeat_template_get
 
+{% endif %}
 # start nginx beat
 nginxbeat_service:
   service:
@@ -126,12 +128,12 @@ nginxbeat_service:
     - enable: true
     - require:
       - file: nginxbeat_bin
-      - cmd: nginxbeat_template
+      - file: nginxbeat_cfg
 
 {% endif %}
 
 {% if pillar.monitor.beats.monitor_es_server %}
-nginxbeat_bin:
+elasticbeat_bin:
   file:
     - managed
     - name: /opt/elasticbeat/elasticbeat
@@ -150,9 +152,10 @@ elasticbeat_cfg:
 elasticbeat_template_get:
   file:
     - managed
-    - name: /tmp/elasticbeat.template.json
+    - name: /opt/elasticbeat/elasticbeat.template.json
     - source: salt://monitor/etc/beats/elasticbeat/elasticbeat.template.json
 
+{% if pillar.monitor.beats.install_templates %}
 elasticbeat_template:
   cmd:
     - run
@@ -160,6 +163,8 @@ elasticbeat_template:
     - unless: curl -f 'http://{{es_host}}:9200/_template/elasticbeat'
     - require:
       - file: elasticbeat_template_get
+
+{% endif %}
 
 elasticbeat_init:
   file:
@@ -175,5 +180,5 @@ elasticbeat_service:
     - enable: true
     - require:
       - file: elasticbeat_bin
-      - cmd: elasticbeat_template
+      - file: elasticbeat_cfg
 {% endif %}

@@ -38,3 +38,7 @@ gem-pkgs:
     - require_in:
         - service: sensu-client
 {% endfor %}
+
+/etc/sensu/plugins/check-log.rb:
+  file.manage
+    - source: salt://monitor/etc/sensu/plugins/check-log.rb

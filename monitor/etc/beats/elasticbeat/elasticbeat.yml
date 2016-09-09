@@ -11,7 +11,7 @@ input:
   # Defaults to ["http://127.0.0.1:9200"].
   # Note: Do not use trailing slash
   urls:
-    - http://es_host_to_monitor:9200
+    - http://{{es_host_to_monitor}}:9200
 
   # Statistics to collect
   stats:
