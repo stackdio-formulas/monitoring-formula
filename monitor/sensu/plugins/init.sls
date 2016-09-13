@@ -40,5 +40,7 @@ gem-pkgs:
 {% endfor %}
 
 /etc/sensu/plugins/check-log.rb:
-  file.managed
+  file.managed:
     - source: salt://monitor/etc/sensu/plugins/check-log.rb
+
+
