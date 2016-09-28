@@ -1,0 +1,13 @@
+{
+  "filters": {
+    "filter_interval_60_hourly": {
+      "negate": true,
+      "attributes": {
+        "check": {
+          "interval": 60
+        },
+        "occurrences": "eval: value != 1 && value % 60 != 0"
+      }
+    }
+  }
+}
