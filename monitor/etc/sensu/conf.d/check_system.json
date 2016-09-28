@@ -1,18 +1,18 @@
 {% if pillar.monitor.pagerduty.api_key %}
-   {%- set HANDLERS = '"mailer-ses", "pagerduty"' -%}
+   {%- set HANDLERS = '"mailer-ses_filter_hourly", "pagerduty"' -%}
 {% else %}
-   {%- set HANDLERS = '"mailer-ses"' -%}
+   {%- set HANDLERS = '"mailer-ses_filter_hourly"' -%}
 {% endif %}
 {
   "checks": {
     "load_check": {
-      "handlers": ["default"],
+      "handlers": [ {{ HANDLERS }} ],
       "command": "/opt/sensu/embedded/bin/check-load.rb",
       "interval": 60,
       "subscribers": [ "all" ]
     },
     "mem_check": {
-      "handlers": ["default"],
+      "handlers": [ {{ HANDLERS }} ],
       "command": "/opt/sensu/embedded/bin/check-memory.rb -w 1000 -c 500",
       "interval": 60,
       "subscribers": [ "all" ]
@@ -22,14 +22,14 @@
       "type": "metric",
       "command": "/opt/sensu/embedded/bin/metrics-disk-usage.rb --scheme sensu.:::name:::",
       "interval": 60,
-      "subscribers": [ "all" ]
+      "subscribers": [ "NONE" ]
     },
     "vmstat_metrics": {
       "handlers": ["graphite-tcp" ],
       "type": "metric",
       "command": "/opt/sensu/embedded/bin/metrics-vmstat.rb  --scheme sensu.:::name:::",
       "interval": 60,
-      "subscribers": [ "all" ]
+      "subscribers": [ "NONE" ]
     },
     "fs_checks": {
       "handlers": [ {{ HANDLERS }} ],

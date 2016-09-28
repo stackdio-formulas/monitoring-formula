@@ -23,6 +23,11 @@
       "type": "pipe",
       "command": "/etc/sensu/handlers/handler-ses.rb"
     },
+    "mailer-ses_filter_hourly": {
+      "type": "pipe",
+      "filter": "filter_interval_60_hourly",
+      "command": "/etc/sensu/handlers/mailer-ses.rb"
+    },
     "sns": {
       "type": "pipe",
       "command": "/opt/sensu/embedded/bin/handler-sns.rb"
