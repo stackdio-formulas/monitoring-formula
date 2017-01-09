@@ -7,7 +7,7 @@
 #
 
 {% set plugin_list = [ 'disk-checks', 'aws', 'filesystem-checks', 'load-checks', 
-  'redis',  'slack', 'pagerduty', 'http', 'logs', 'process-checks', 
+  'redis',  'slack', 'pagerduty', 'http', 'logs', 'process-checks', 'xmlparser', 
   'nginx', 'vmstats', 'supervisor', 'memory-checks', 'sensu', 'elasticsearch' ] %}
 
 gem-pkgs:
@@ -20,6 +20,7 @@ gem-pkgs:
       - zlib-devel
       - libxml2-devel
       - gcc-c++
+      - expat-devel
 {% elif grains["os_family"] == "Debian" %}
       - zlib1g-dev
       - libxml2-dev
