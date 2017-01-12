@@ -7,7 +7,7 @@
 #
 
 {% set plugin_list = [ 'disk-checks', 'aws', 'filesystem-checks', 'load-checks', 
-  'redis',  'slack', 'pagerduty', 'http', 'logs', 'process-checks', 'xmlparser', 
+  'redis',  'slack', 'pagerduty', 'http', 'logs', 'process-checks', 'opsgenie',
   'nginx', 'vmstats', 'supervisor', 'memory-checks', 'sensu', 'elasticsearch' ] %}
 
 gem-pkgs:
@@ -39,6 +39,16 @@ gem-pkgs:
     - require_in:
         - service: sensu-client
 {% endfor %}
+
+xmlparser-gem-install:
+  cmd.run:
+    - name: /opt/sensu/embedded/bin/gem install xmlparser
+    - require:
+        - pkg: gem-pkgs
+        - pkg: sensu-client-pkg
+        - file: /etc/default/sensu
+    - require_in:
+        - service: sensu-client
 
 /etc/sensu/plugins/check-log.rb:
   file.managed:
