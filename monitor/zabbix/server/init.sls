@@ -40,7 +40,29 @@ zabbix-server:
       - file: zabbix-conf-file
       - cmd: zabbix-table-create
 
-#/etc/http/conf.d/zabbix....
+zabbix-tz_set:
+  file.managed:
+    - name: /etc/httpd/conf.d/zabbix.conf
+    - source: salt://monitor/zabbix/files/zabbix.conf
+    - user: root
+    - group: root
+    - require:
+      - service: zabbix-server
 
-#Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
+zabbix-conf-php:
+  file.managed:
+    - name: /etc/zabbix/web/zabbix.conf.php
+    - source: salt://monitor/zabbix/files/zabbix.conf.php
+    - template: jinja
+    - user: root
+    - group: root
+    - require:
+      - service: zabbix-server
 
+httpd:
+  service:
+    - running
+    - enable: true
+    - require:
+      - file: zabbix-conf-php
+    
