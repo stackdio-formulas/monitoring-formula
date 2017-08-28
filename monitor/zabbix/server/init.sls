@@ -9,7 +9,7 @@ zabbix-server-pkg:
     - pkgs:
       - zabbix-server-mysql
       - zabbix-web-mysql
-      - mysql
+      - mariadb 
 
 #needs a pre-exisiting DB zabbix and user 
 # create database zabbix character set utf8 collate utf8_bin;
