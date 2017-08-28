@@ -16,7 +16,7 @@ zabbix-server-pkg:
 
 zabbix-table-create:
   cmd.run:
-    - name: zcat /usr/share/doc/zabbix-server-mysql-3*/create.sql.gz | mysql -u{{zabbix_db_user}} -p{{zabbix_db_pass}} -h{{zabbix.db.host}} --database=zabbix
+    - name: zcat /usr/share/doc/zabbix-server-mysql-3*/create.sql.gz | mysql -u{{zabbix_db_user}} -p{{zabbix_db_pass}} -h{{zabbix_db_host}} --database=zabbix
     - unless: mysql -u{{zabbix_db_user}} -p{{zabbix_db_pass}} -h{{zabbix_db_host}} --database=zabbix -e "select count(*) from users;"
     - require:
       - pkg: zabbix-server-pkg
