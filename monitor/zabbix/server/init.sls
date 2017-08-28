@@ -24,7 +24,7 @@ zabbix-table-create:
 zabbix-conf-file:
   file.managed:
     - name: /etc/zabbix/zabbix_server.conf
-    - source: salt://monitor/zabbix/file/zabbix_server.conf
+    - source: salt://monitor/zabbix/files/zabbix_server.conf
     - template: jinja
     - user: root
     - group: zabbix
