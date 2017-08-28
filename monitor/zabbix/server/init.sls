@@ -1,3 +1,6 @@
+{%- set zabbix_db_user = pillar.monitoring.zabbix.db_user -%}
+{%- set zabbix_db_host = pillar.monitoring.zabbix.db_host -%}
+{%- set zabbix_db_pass = pillar.monitoring.zabbix.db_pass -%}
 
 zabbix-server-pkg:
   pkg:
@@ -37,27 +40,7 @@ zabbix-server:
       - file: zabbix-conf-file
       - cmd: zabbix-table-create
 
-/etc/http/conf.d/zabbix....
-Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
+#/etc/http/conf.d/zabbix....
 
-[root@jds-zab web]# more zabbix.conf.php
-<?php
-// Zabbix GUI configuration file.
-global $DB;
+#Configuration file "/etc/zabbix/web/zabbix.conf.php" created.
 
-$DB['TYPE']     = 'MYSQL';
-$DB['SERVER']   = 'test-wp-db.cjjcv8pft9v8.us-west-2.rds.amazonaws.com';
-$DB['PORT']     = '0';
-$DB['DATABASE'] = 'zabbix';
-$DB['USER']     = 'fred';
-$DB['PASSWORD'] = 'xPWYj999dwHQUaKk5BWc';
-
-// Schema name. Used for IBM DB2 and PostgreSQL.
-$DB['SCHEMA'] = '';
-
-$ZBX_SERVER      = 'jds-zab.spotlight-dev.htspotlight.com';
-$ZBX_SERVER_PORT = '10051';
-$ZBX_SERVER_NAME = 'first try';
-
-$IMAGE_FORMAT_DEFAULT = IMAGE_FORMAT_PNG;
-[root@jds-zab web]#
