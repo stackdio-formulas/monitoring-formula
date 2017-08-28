@@ -71,6 +71,16 @@ pillar_defaults:
         password: CHANGEME
         vhost: /sensu
       check_system: true
+    graphite:
+      secret_key: CHANGEME
+      db_password: CHANGEME
+      username: admin
+      password: CHANGEME
+      email_addr: root@localhost
+      storage_dir: /var/lib/graphite
+    grafana:
+      username: admin
+      password: CHANGME
     aws:
       access_key: CHANGEME
       secret_key: CHANGEME
