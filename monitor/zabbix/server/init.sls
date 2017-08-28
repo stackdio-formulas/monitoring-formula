@@ -1,6 +1,6 @@
-{%- set zabbix_db_user = pillar.monitoring.zabbix.db_user -%}
-{%- set zabbix_db_host = pillar.monitoring.zabbix.db_host -%}
-{%- set zabbix_db_pass = pillar.monitoring.zabbix.db_pass -%}
+{%- set zabbix_db_user = pillar.monitor.zabbix.db_user -%}
+{%- set zabbix_db_host = pillar.monitor.zabbix.db_host -%}
+{%- set zabbix_db_pass = pillar.monitor.zabbix.db_pass -%}
 
 zabbix-server-pkg:
   pkg:
@@ -16,8 +16,8 @@ zabbix-server-pkg:
 
 zabbix-table-create:
   cmd.run:
-    - name: zcat /usr/share/doc/zabbix-server-mysql-3*/create.sql.gz | mysql -u{zabbix.db.user} -p{zabbix.db.password} -h{zabbix.db.host} --database=zabbix
-    - unless: mysql -u{zabbix.db.user} -p{zabbix.db.password} -h{zabbix.db.host} --database=zabbix -e "select count(*) from users;"
+    - name: zcat /usr/share/doc/zabbix-server-mysql-3*/create.sql.gz | mysql -u{zabbix_db_user} -p{zabbix_db_password} -h{zabbix.db.host} --database=zabbix
+    - unless: mysql -u{zabbix_db_user} -p{zabbix_db_password} -h{zabbix_db_host} --database=zabbix -e "select count(*) from users;"
     - require:
       - pkg: zabbix-server-pkg
 
