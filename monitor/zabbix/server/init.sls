@@ -2,6 +2,9 @@
 {%- set zabbix_db_host = pillar.monitor.zabbix.db_host -%}
 {%- set zabbix_db_pass = pillar.monitor.zabbix.db_pass -%}
 
+include:
+  - monitor.zabbix.repo
+
 zabbix-server-pkg:
   pkg:
     - installed
