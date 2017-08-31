@@ -7,6 +7,10 @@ zabbix-agent-pkg:
     - installed
     - name: zabbix-agent
 
+/etc/zabbix/zabbix_agent.conf:
+  file.managed:
+    XXX
+
 zabbix-agent:
   service:
     - running
