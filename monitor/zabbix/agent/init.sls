@@ -22,4 +22,5 @@ zabbix-agent:
     - enable: true
     - require:
       - pkg: zabbix-agent-pkg
+      - file: /etc/zabbix/zabbix_agentd.conf
 
