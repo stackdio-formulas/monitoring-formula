@@ -7,9 +7,14 @@ zabbix-agent-pkg:
     - installed
     - name: zabbix-agent
 
-/etc/zabbix/zabbix_agent.conf:
+/etc/zabbix/zabbix_agentd.conf:
   file.managed:
-    XXX
+    - source: salt://monitor/zabbix/files/zabbix_agentd.conf
+    - template: jinja
+    - user: root
+    - group: zabbix
+    - require:
+      - pkg: zabbix-agent-pkg
 
 zabbix-agent:
   service:

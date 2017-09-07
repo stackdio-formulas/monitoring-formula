@@ -97,3 +97,4 @@ pillar_defaults:
       db_user: CHANGEME
       db_pass: CHANGEME
       db_host: CHANGEME
+      server: CHANGEME
