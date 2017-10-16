@@ -53,5 +53,6 @@ xmlparser-gem-install:
 /etc/sensu/plugins/check-log.rb:
   file.managed:
     - source: salt://monitor/etc/sensu/plugins/check-log.rb
+    - mode: 755
 
 
